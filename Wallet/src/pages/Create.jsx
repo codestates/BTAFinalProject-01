@@ -1,12 +1,12 @@
 import React from "react";
 import { Typography } from "@mui/material";
-import { Link } from "react-chrome-extension-router";
+import { Link } from "react-router-dom";
 
 const Create = () => {
   return (
-    <>
-      <Typography>Create Wallet</Typography>
-    </>
+	<>
+	  <Typography>Create Wallet</Typography>
+	</>
   );
 };
 
