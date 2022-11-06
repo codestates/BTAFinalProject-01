@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Neo Wallet",
+  "description": "Neo Wallet Extension",
+  "version": "1.0.0",
+  "icons": {
+    "16": "neologo.png",
+    "48": "neologo.png",
+    "128": "neologo.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "neologo.png",
+      "48": "neologo.png",
+      "128": "neologo.png"
+    },
+    "default_popup": "index.html",
+    "default_title": "Neo Wallet Extension"
+  },
+  "permissions": ["storage"]
+}
