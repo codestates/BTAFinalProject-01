@@ -5,10 +5,10 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
-    popup: path.resolve('src/popup/popup.tsx'),
-    options: path.resolve('src/options/options.tsx'),
-    background: path.resolve('src/background/background.ts'),
-    contentScript: path.resolve('src/contentScript/contentScript.ts'),
+    popup: path.resolve('src/pages/.jsx'),
+    options: path.resolve('src/options/options.jsx'),
+    background: path.resolve('src/background/background.js'),
+    contentScript: path.resolve('src/contentScript/contentScript.js'),
   },
   module: {
     rules: [
@@ -28,7 +28,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['.tsx', '.ts', '.js', '.jsx'],
   },
   plugins: [
     new CleanWebpackPlugin({
@@ -62,7 +62,7 @@ module.exports = {
 
 function getHtmlPlugins(chunks) {
   return chunks.map(chunk => new HtmlPlugin({
-    title: 'HERMEZ Wallet Extension',
+    title: 'NEO Wallet Extension',
     filename: `${chunk}.html`,
     chunks: [chunk],
   }))
