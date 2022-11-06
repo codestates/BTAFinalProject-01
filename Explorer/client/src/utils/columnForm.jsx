@@ -3,6 +3,7 @@ export const lastedBlockColumns = [
         title: 'Index',
         dataIndex: 'index',
         key: 'index',
+        render : text => <a href={`http://localhost:3000/blocks/${text}`}>{text}</a>
     },
     {
         title: 'Txs Count',
@@ -24,11 +25,14 @@ export const lastedBlockColumns = [
 export const lastedTxColumns = [
     {
         title: 'Tx ID',
-        dataIndex: 'txId',
-        key: 'txId',
+        dataIndex: 'txid',
+        key: 'txid',
+        render : text => <a href = {`http://localhost:3000/txs/${text}`}>
+                            {`${text.slice(0,6)}..`}
+                        </a>
     },
     {
-        title: 'Gas Consumed',
+        title: 'Gas',
         dataIndex: 'gas',
         key: 'gas',
     },
@@ -49,9 +53,10 @@ export const lastedTxColumns = [
         title: 'Index',
         dataIndex: 'index',
         key: 'index',
+        render : text => <a href={`http://localhost:3000/blocks/${text}`}>{text}</a>
     },
     {
-        title: 'BlockHash',
+        title: 'Block Hash',
         dataIndex: 'hash',
         key: 'hash',
     },
@@ -71,3 +76,34 @@ export const lastedTxColumns = [
         key: 'time',
     },
 ];
+
+export const txListColumns = [
+    {
+        title: 'Tx ID',
+        dataIndex: 'txid',
+        key: 'txid',
+        render : text => <a href = {`http://localhost:3000/txs/${text}`}>
+                            {text}
+                        </a>
+    },
+    {
+        title: 'Block Height',
+        dataIndex: 'blockHeight',
+        key: 'blockHeight',
+    },
+    {
+        title: 'Gas',
+        dataIndex: 'gas',
+        key: 'gas',
+    },
+    {
+        title: 'Size',
+        dataIndex: 'size',
+        key: 'size',
+    },
+    {
+        title: 'Time',
+        dataIndex: 'time',
+        key: 'time',
+    },
+  ];

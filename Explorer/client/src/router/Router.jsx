@@ -17,11 +17,11 @@ export default function Router() {
       <Route path="/blocks" element={<Blocks />} />
       <Route path="/blocks/:content_id" element={<BlockDetail />} />
       <Route path="/txs" element={<Txs />} />
-      <Route path="/txDetail/:content_id" element={<TxDetail />} />
+      <Route path="/txs/:content_id" element={<TxDetail />} />
       <Route path="/contracts" element={<Contracts />} />
-      <Route path="/contractDetail/:content_id" element={<ContractDetail />} />
+      <Route path="/contracts/:content_id" element={<ContractDetail />} />
       <Route path="/addresses" element={<Addresses />} />
-      <Route path="/addressDetail/:content_id" element={<AddressDetail />} />
+      <Route path="/addresses/:content_id" element={<AddressDetail />} />
     </Routes>
   );
 }
