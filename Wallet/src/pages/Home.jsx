@@ -8,7 +8,6 @@ const Home = () => {
 
   return (
     <div>
-      <br/><br/>
       <Stack
         direction="column"
         justifyContent="flex-start"
