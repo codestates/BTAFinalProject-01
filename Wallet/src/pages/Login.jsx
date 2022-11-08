@@ -7,12 +7,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const theme = createTheme();
 
 const Login = () => {
-  const handleSubmit = (event) => {
+  const handleLogin = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      password: data.get('password'),
-      confirm_password: data.get('confirm-password'),
+      password: data.get('password')
     });
   };
 
@@ -22,21 +21,20 @@ const Login = () => {
           <CssBaseline />
           <Box
             sx={{
-              marginTop: 8,
+              marginTop: 6,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <Avatar sx={{ m: 3, bgcolor: 'success.main' }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign up
+            <Typography component="h5" variant="h6">
+              비밀번호를 입력하여 <br/> 계정에 로그인하세요.
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Box component="form" noValidate onSubmit={handleLogin} sx={{ mt: 3 }}>
               <Grid container spacing={2}>
-                
                 <Grid item xs={12}>
                   <TextField
                     required
@@ -48,17 +46,6 @@ const Login = () => {
                     autoComplete="new-password"
                   />
                 </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    name="confirm-password "
-                    label="Confirm Password"
-                    type="confirm-password"
-                    id="confirm-password"
-                    autoComplete="new-password-confirm"
-                  />
-                </Grid>
                 
               </Grid>
               <Button
@@ -67,15 +54,9 @@ const Login = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign Up
+                로그인
               </Button>
-              <Grid container justifyContent="flex-end">
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    You lost your account?
-                  </Link>
-                </Grid>
-              </Grid>
+              
             </Box>
           </Box>
         </Container>

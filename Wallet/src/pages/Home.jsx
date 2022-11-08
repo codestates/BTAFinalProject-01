@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Stack, Typography, Button } from '@mui/material';
-import Login from "./Login";
-import Create from "./Create";
 
 const Home = () => {
 
@@ -12,7 +10,8 @@ const Home = () => {
         direction="column"
         justifyContent="flex-start"
         alignItems="center"
-        spacing={4}
+        spacing={5}
+        sx={{ mt:4 }}
       >
         <Typography variant="h5">Neo Wallet</Typography>
         <Stack
@@ -32,7 +31,18 @@ const Home = () => {
           spacing={1}
         >
           <Typography variant="subtitle2">지갑 생성하기</Typography>
-          <Button variant="contained" color="info">Create Wallet</Button>
+          <Button variant="contained" color="info" component={Link} to="/create">Create Wallet</Button>
+        </Stack>
+
+        <Stack
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="center"
+          spacing={1}
+        >
+          <Link href="#" variant="body2">
+            비밀키 복구 구문을 잃어버리셨나요?
+          </Link>     
         </Stack>
   
       </Stack>
