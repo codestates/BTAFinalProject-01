@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import { Typography, Avatar, Button, CssBaseline, TextField, FormControl, FormControlLabel, Checkbox, Link, Grid, Box, Container } from "@mui/material";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Home from "./Home";
 
 const theme = createTheme();
 
