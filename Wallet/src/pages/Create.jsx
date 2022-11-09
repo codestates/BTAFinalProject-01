@@ -1,24 +1,43 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { useNavigate } from "react-router-dom";
-import { Typography, Avatar, Button, CssBaseline, TextField, Grid, Box, Container } from "@mui/material";
+import { Typography, Avatar, Button, CssBaseline, TextField, Grid, Box, Container, Alert, Stack } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import * as walletAPI from '../APIs/walletAPI';
-// import { hashed } from "../utils/api.js";
+import { setPassword } from "../utils/storage.js";
 
 const theme = createTheme();
 
-function Create(){
+const Create = () => {
+	const navigate = useNavigate();
+	const [myPassword, setMyPassword] = useState();
+	
+	useEffect(() => {
+		console.log(myPassword);
+	}, [myPassword]);
+
+  const [isPasswordSame, setIsPasswordSame] = useState(true);
+
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
-		console.log({
-			password: data.get("password"),
-			confirmpassword: data.get("confirmpassword"),
-		});
-		const res = walletAPI.createWallet(data);
-		console.log(res);
+		const	password = data.get("password");
+		const	confirmpassword = data.get("confirmpassword");
+
+		if (password === confirmpassword && password !== undefined) {
+			setIsPasswordSame(true);
+			setMyPassword(password);
+			console.log('set password');
+			
+			// setPassword().then((res) => {
+			// 	navigate(`/showmnemonic`);
+			// })
+			navigate(`/showmnemonic`);
+		} else {
+			setIsPasswordSame(false);
+			setMyPassword();
+			console.log('error')
+		}
 	};
 
 	return (
@@ -54,7 +73,7 @@ function Create(){
 								<TextField
 									required
 									fullWidth
-									name="confirmpassword "
+									name="confirmpassword"
 									label="Confirm Password"
 									type="password"
 									id="confirmpassword"
@@ -62,14 +81,24 @@ function Create(){
 								/>
 							</Grid>
 						</Grid>
+						
 						<Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
 							Sign Up
 						</Button>
+
+						{isPasswordSame ? (
+							<Stack sx={{ width: '100%' }} spacing={2}></Stack>
+						) : (
+							<Stack sx={{ width: '100%' }} spacing={2}>
+								<Alert severity="error">일치하지 않습니다.</Alert>
+							</Stack>
+						)}
+						
 					</Box>
 				</Box>
 			</Container>
 		</ThemeProvider>
 	);
-}
+};
 
 export default Create;

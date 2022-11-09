@@ -46,3 +46,6 @@
 //     events: [],
 //   },
 // }
+
+import {default as Neon} from "@cityofzion/neon-js";
+const acct = Neon.create.account("NKuyBkoGdZZSLyPbJEetheRhMjeznFZszf");
