@@ -4,12 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { Typography, Avatar, Button, CssBaseline, TextField, Grid, Box, Container } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
+import * as walletAPI from '../APIs/walletAPI';
 // import { hashed } from "../utils/api.js";
 
 const theme = createTheme();
 
-const Create = () => {
+function Create(){
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
@@ -17,6 +17,8 @@ const Create = () => {
 			password: data.get("password"),
 			confirmpassword: data.get("confirmpassword"),
 		});
+		const res = walletAPI.createWallet(data);
+		console.log(res);
 	};
 
 	return (
@@ -68,6 +70,6 @@ const Create = () => {
 			</Container>
 		</ThemeProvider>
 	);
-};
+}
 
 export default Create;
