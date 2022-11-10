@@ -1,5 +1,4 @@
-import Neon, { wallet } from "@cityofzion/neon-js";
-import { encryptKeystore } from "@ethersproject/json-wallets";
+import { wallet } from "@cityofzion/neon-js";
 import Seed from "mnemonic-seed-js";
 
 
