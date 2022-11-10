@@ -5,6 +5,7 @@ import { Typography, Avatar, Button, CssBaseline, TextField, Grid, Box, Containe
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { setPassword } from "../utils/storage.js";
+import * as walletAPI from '../APIs/walletAPI';
 
 const theme = createTheme();
 
@@ -21,14 +22,15 @@ const Create = () => {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
-		const	password = data.get("password");
-		const	confirmpassword = data.get("confirmpassword");
-
+		const password = data.get("password");
+		const confirmpassword = data.get("confirmpassword");
 		if (password === confirmpassword && password !== undefined) {
 			setIsPasswordSame(true);
 			setMyPassword(password);
 			console.log('set password');
-			
+			const res = walletAPI.createWallet(password);
+			console.log(res);
+			//TODO: Use res dictionary to visualize the data
 			// setPassword().then((res) => {
 			// 	navigate(`/showmnemonic`);
 			// })
