@@ -19,7 +19,7 @@ const Create = () => {
 
   const [isPasswordSame, setIsPasswordSame] = useState(true);
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async(event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
 		const password = data.get("password");
@@ -28,9 +28,9 @@ const Create = () => {
 			setIsPasswordSame(true);
 			setMyPassword(password);
 			console.log('set password');
-			const res = walletAPI.createWallet(password);
+			const res = await walletAPI.createWallet(password);
 			console.log(res);
-			//TODO: Use res dictionary to visualize the data
+			//TODO: Save 'res' in local storage
 			// setPassword().then((res) => {
 			// 	navigate(`/showmnemonic`);
 			// })
