@@ -9,8 +9,7 @@ const url = process.env.REACT_APP_PRIVATE_RPC_URL;
 const rpcClient = Neon.create.rpcClient(url);
 
 
-export const createWallet = (data) => {
-    const password = data.get("password");
+export const createWallet = (password) => {
 
     const seed = Seed.new(password);
     const mnemonicCode = seed.mnemonic.toString();
@@ -19,7 +18,7 @@ export const createWallet = (data) => {
     const userWallet = new wallet.Wallet();
     const userAccount = new wallet.Account(privateKey);
     userWallet.addAccount(userAccount);
-    
+    console.log(userAccount);
     return {'privateKey': userAccount.privateKey,
             'address': userAccount.label,
             'mnemonic': mnemonicCode};
