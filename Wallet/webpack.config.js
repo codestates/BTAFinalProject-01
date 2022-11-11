@@ -12,7 +12,11 @@ module.exports = {
 		]
 	},
 	resolve: {
-		extensions: ['.tsx', '.ts', '.js', 'jsx']
+		extensions: ['.tsx', '.ts', '.js', 'jsx'],
+		fallback: {
+            crypto: require.resolve('crypto-browserify'),
+            stream: require.resolve('stream'),
+        },
 	},
 	output: {
 		filename: 'index.js',
