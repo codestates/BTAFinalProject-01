@@ -1,10 +1,11 @@
+/*global chrome*/
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { Typography, Avatar, Button, CssBaseline, TextField, Grid, Box, Container, Alert, Stack } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { setPassword } from "../utils/storage.js";
+// import { setPassword } from "../utils/storage.js";
 import * as walletAPI from '../APIs/walletAPI';
 
 const theme = createTheme();
@@ -17,7 +18,10 @@ const Create = () => {
 		console.log(myPassword);
 	}, [myPassword]);
 
-  const [isPasswordSame, setIsPasswordSame] = useState(true);
+  	const [isPasswordSame, setIsPasswordSame] = useState(true);
+	const [myNep2Key, setMyNep2Key] = useState();
+	// chrome.storage.local.set({ "Nep2Key": myNep2Key });
+	console.log(myNep2Key)
 
 	const handleSubmit = async(event) => {
 		event.preventDefault();
@@ -30,6 +34,17 @@ const Create = () => {
 			console.log('set password');
 			const res = await walletAPI.createWallet(password);
 			console.log(res);
+			// console.log(res.nep2Key);
+			const nep2Key = res.nep2Key;
+			console.log(nep2Key);
+			setMyNep2Key(nep2Key);
+			
+			// chrome.storage.local.set({
+			// 	"password": password,
+			// 	"nep2Key": nep2Key,
+			// 	"address": address,
+			// 	"mnemonic": menemonic
+			// });
 			//TODO: Save 'res' in local storage
 			// setPassword().then((res) => {
 			// 	navigate(`/showmnemonic`);

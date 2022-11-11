@@ -25,7 +25,7 @@ const Home = () => {
 				<Link href="#" variant="body2">
 					패스워드를 잊으셨나요?
 				</Link>
-        <Link href="#" variant="body2">
+        		<Link href="#" variant="body2">
 					복구 구문을 잊으셨나요?
 				</Link>
 			</Stack>

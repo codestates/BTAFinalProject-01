@@ -1,3 +1,4 @@
+/*global chrome*/
 import React from "react";
 import { Typography, Box } from "@mui/material";
 import { Link } from "react-router-dom";

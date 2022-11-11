@@ -1,3 +1,4 @@
+/*global chrome*/
 import React from "react";
 import { Typography, Box, Stack, TextField, FormControl, InputLabel, Select, MenuItem, Button } from "@mui/material";
 import { Link } from "react-router-dom";

@@ -25,8 +25,8 @@ const App = () => {
 			<Route path="/tokenlist" element={<TokenList />} />
 			<Route path="/setting" element={<Setting />} />
 			<Route path="/transfer" element={<Transfer />} />
-      <Route path="/myaccount" element={<MyAccount />} />
-      <Route path="/showmnemonic" element={<ShowMnemonic />} />
+			<Route path="/myaccount" element={<MyAccount />} />
+			<Route path="/showmnemonic" element={<ShowMnemonic />} />
 		</Routes>
 	);
 };
