@@ -20,7 +20,7 @@ const Create = () => {
 
   	const [isPasswordSame, setIsPasswordSame] = useState(true);
 	const [myNep2Key, setMyNep2Key] = useState();
-	// chrome.storage.local.set({ "Nep2Key": myNep2Key });
+	chrome.storage.local.set({ "Nep2Key": myNep2Key });
 	console.log(myNep2Key)
 
 	const handleSubmit = async(event) => {
