@@ -19,7 +19,6 @@
     "dotenv": "^16.0.3",
     "ethers": "^5.7.1",
     "html-webpack-plugin": "^4.5.0",
-    "mnemonic-seed-js": "^0.3.1",
     "node-polyfill-webpack-plugin": "^2.0.1",
     "react": "^18.2.0",
     "react-app-rewired": "^2.2.1",
