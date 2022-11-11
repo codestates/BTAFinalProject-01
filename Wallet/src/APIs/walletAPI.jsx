@@ -13,9 +13,9 @@ export const createWallet = async (password) => {
     // const userWallet = Neon.create.wallet();
     // const userAccount = new wallet.Account(privateKey);
     // userWallet.addAccount(userAccount);
-    
+
     return {'nep2Key': nep2Key,
             'address': userAccount.label,
-            'privateKey': privateKey
+            'mnemonicCode': mnemonicCode
             };
 }
