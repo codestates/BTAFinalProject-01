@@ -19,9 +19,10 @@ const Create = () => {
 	}, [myPassword]);
 
   	const [isPasswordSame, setIsPasswordSame] = useState(true);
-	const [myNep2Key, setMyNep2Key] = useState();
-	chrome.storage.local.set({ "Nep2Key": myNep2Key });
-	console.log(myNep2Key)
+	// const [myNep2Key, setMyNep2Key] = useState();
+	// const Nep2key = myNep2Key.toString();
+	// chrome.storage.local.set({ Nep2Key : Nep2key });
+	// console.log(Nep2key)
 
 	const handleSubmit = async(event) => {
 		event.preventDefault();
@@ -34,10 +35,10 @@ const Create = () => {
 			console.log('set password');
 			const res = await walletAPI.createWallet(password);
 			console.log(res);
-			// console.log(res.nep2Key);
-			const nep2Key = res.nep2Key;
-			console.log(nep2Key);
-			setMyNep2Key(nep2Key);
+			console.log(res.nep2Key);
+			const nep2Key1 = res.nep2Key;
+			console.log(nep2Key1);
+			// setMyNep2Key(nep2Key1);
 			
 			// chrome.storage.local.set({
 			// 	"password": password,
