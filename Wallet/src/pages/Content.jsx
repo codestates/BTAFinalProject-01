@@ -1,6 +1,6 @@
 /*global chrome*/
 import React from "react";
-import { Typography, Box, AppBar, Toolbar, Button, IconButton, Avatar, Stack, Divider, Modal } from "@mui/material";
+import { Typography, Box, AppBar, Toolbar, Button, IconButton, Avatar, Stack, Divider, Modal, Chip } from "@mui/material";
 import { Link } from "react-router-dom";
 import Transaction from "../components/Transaction";
 import TokenList from "../components/TokenList";
@@ -44,9 +44,7 @@ const Content = () => {
 			</Box>
 			<Box sx={{ p: 3 }}>
 				<Stack spacing={3} direction="column" justifyContent="center" alignItems="center">
-					<Button variant="outlined" onClick={handleOpen}>
-						Token List
-					</Button>
+					<Chip label="Token List" variant="outlined" color="success" onClick={handleOpen} />
 					<Modal open={open} onClose={handleClose} aria-labelledby="child-modal-title" aria-describedby="child-modal-description">
 						<Box sx={style}>
 							<TokenList />

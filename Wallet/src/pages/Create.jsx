@@ -34,7 +34,7 @@ const Create = () => {
 			console.log(res.nep2Key);
 			const Nep2Key = res.nep2Key;
 			console.log(Nep2Key);
-			chrome.storage.local.set({ Nep2Key: Nep2Key });
+			// chrome.storage.local.set({ Nep2Key: Nep2Key });
 			
 			navigate(`/showmnemonic`);
 		} else {
