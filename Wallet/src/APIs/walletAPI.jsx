@@ -1,4 +1,4 @@
-import Neon, { wallet } from "@cityofzion/neon-js";
+import Neon, { sc, tx, wallet, CONST } from "@cityofzion/neon-js";
 import Axios from "axios";
 
 const ethers = require('ethers');
@@ -6,7 +6,6 @@ const ethers = require('ethers');
 const url = process.env.REACT_APP_PRIVATE_RPC_URL;
 const rpcClient = Neon.create.rpcClient(url);
 
-console.log(url);
 
 export const createWallet = async (password) => {
 
@@ -24,8 +23,9 @@ export const createWallet = async (password) => {
             'address': userAccount.label,
             'mnemonic': mnemonicCode,
             'publicKey': userAccount.publicKey,
-            'privateKey': userAccount.privateKey,
-            'WIF': userAccount.WIF
+            'WIF': userAccount.WIF,
+            'privateKey': privateKey,
+            'scriptHash': userAccount.scriptHash
             };
 }
 
@@ -44,4 +44,60 @@ export const checkBalance = async (address) => {
       id: 1,
     });
     return res
+}
+
+
+export const transfer = async (userAccount, toAddress, tokenAmount) => {
+    // const networkMagic = Number(process.env.NETWORK_MAGIC);
+    // const systemFee = process.env.SYSTEM_FEE;
+    // const networkFee = process.env.NETWORK_FEE;
+    // const heightIncrease = Number(process.env.TRANSFER_HEIGHT_INCREASE);
+    const networkMagic = 5195086;
+    const systemFee = "100000001";
+    const networkFee = "100000001";
+    const heightIncrease = 10;
+    const script = sc.createScript({
+        scriptHash: CONST.NATIVE_CONTRACT_HASH.GasToken,
+        operation: "transfer",
+        args: [
+        sc.ContractParam.hash160(userAccount.address),
+        sc.ContractParam.hash160(toAddress),
+        sc.ContractParam.integer(tokenAmount),
+        sc.ContractParam.any(),
+        ],
+    });
+
+
+    const currentHeight = await rpcClient.getBlockCount();
+
+    const myTx = new tx.Transaction({
+        signers: [
+            {
+                account: userAccount.scriptHash,
+                scopes: tx.WitnessScope.CalledByEntry,
+            },
+        ],
+        validUntilBlock: currentHeight + heightIncrease,
+        systemFee: systemFee,
+        networkFee: networkFee,
+        script,
+    }).sign(userAccount, networkMagic, 1024);
+
+
+    const result = await rpcClient.sendRawTransaction(myTx);
+    console.log("tx hash:",result);
+
+    const getTx = await rpcClient.getRawTransaction(result,true);
+    console.log("tx Info:", getTx);
+
+    const getTx2 = await rpcClient.getRawTransaction(result,true);
+    console.log("tx Info2:", getTx2);
+
+    const res1 = await rpcClient.getNep17Balances(userAccount.address);
+    console.log(1, res1);
+
+    const res2 = await rpcClient.getNep17Balances(toAddress);
+    console.log(2, res2);
+    
+    return true;
 }
