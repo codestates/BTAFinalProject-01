@@ -5,10 +5,11 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
-    popup: path.resolve('src/pages/.jsx'),
-    options: path.resolve('src/options/options.jsx'),
-    background: path.resolve('src/background/background.js'),
-    contentScript: path.resolve('src/contentScript/contentScript.js'),
+    popup: path.resolve('src/pages/index.jsx'),
+    // popup: path.resolve('src/pages/.jsx'),
+    // options: path.resolve('src/options/options.jsx'),
+    // background: path.resolve('src/background/background.js'),
+    // contentScript: path.resolve('src/contentScript/contentScript.js'),
   },
   module: {
     rules: [

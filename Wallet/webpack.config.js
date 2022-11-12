@@ -1,7 +1,7 @@
 const path = require('path');
 module.exports = {
 	mode: 'development', // prod와 차이 있다. 
-	entry: './src/test.tsx', // 어디서 시작할지
+	entry: './src/pages/Home.jsx', // 어디서 시작할지
 	module: { 
 		rules: [
 			{
@@ -12,7 +12,7 @@ module.exports = {
 		]
 	},
 	resolve: {
-		extensions: ['.tsx', '.ts', '.js']
+		extensions: ['.tsx', '.ts', '.js', 'jsx']
 	},
 	output: {
 		filename: 'index.js',
