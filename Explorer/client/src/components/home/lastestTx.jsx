@@ -8,18 +8,7 @@ function LastestTx() {
     const [data, setData] = useState([]);
     const getData = async () => {
         const res = await txAPI.get5TxList();
-        if (res.length > 0) {
-            const res2 = res.map((el,idx) => {
-                return ({
-                    key : idx,
-                    txid: el.txid,
-                    gas: `${Number(el.net_fee) + Number(el.sys_fee)} gas`,
-                    size: `${el.size} bytes`,
-                    time: time.Unix_timestamp(el.time),
-                });
-            });
-            setData(res2);
-        }
+        setData(res.data.transactions.slice(0,5));
     };
 
     useEffect(() => {
@@ -31,7 +20,11 @@ function LastestTx() {
             <h2>
                 Lastest Transactions
             </h2>
-            <Table dataSource={data} columns={col.lastedTxColumns} pagination={false} />;
+            <Table 
+                dataSource={data.map((el) => {el.time = time.Unix_timestamp(el.time); return el})} 
+                columns={col.lastedTxColumns} 
+                pagination={false} 
+            />;
         </div>
     )
 }
