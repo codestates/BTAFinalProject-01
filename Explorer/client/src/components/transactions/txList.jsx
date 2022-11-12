@@ -5,13 +5,13 @@ import * as time from '../../utils/handleTime';
 import * as col from '../../utils/columnForm';
 
 function TxList() {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(0);
     const [pagenum, setPagenum] = useState(1);
     const pageInc = () => { setPagenum(pagenum + 1); }
     const pageDec = () => { if (pagenum > 1) {setPagenum(pagenum -1);} }
     const getData = async () => {
-        const res = await txAPI.getPageTxList(pagenum-1);
-        setData(res.data.transactions);
+        const res = await txAPI.getPageTxList(pagenum);
+        setData(res.data.items);
     };
 
     useEffect(() => {
@@ -24,7 +24,7 @@ function TxList() {
                 Transactions
             </h2>
             <Table 
-                dataSource={data.map((el) => {el.time = time.Unix_timestamp(el.time); return el})} 
+                dataSource={data} 
                 columns={col.txListColumns} 
                 pagination={false} 
             />

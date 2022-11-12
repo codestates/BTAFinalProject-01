@@ -1,8 +1,9 @@
 import Neon from "@cityofzion/neon-js";
+import axios from "axios";
 
+const apiURL = process.env.REACT_APP_RESTFUL_API;
 const url = process.env.REACT_APP_PRIVATE_RPC_URL;
 const rpcClient = Neon.create.rpcClient(url);
-
 
 export const getBlockInfo = async (blocknum) => {
     // let query = Neon.create.query({ 
@@ -31,17 +32,15 @@ export const get5BlockList = async () => {
 }
 
 export const getPageBlockList = async (pagenum) => {
-    let result = [];
-    return await rpcClient.getBlockCount().then(async(res) => {
-        if (typeof(res) === "number") {
-            const start = res - 1 - 10*(pagenum);
-            const end = start - 10;
-            for (let i=start; i > end; i--) {
-                await rpcClient.getBlock(i,true).then((res) => {
-                    result.push(res);
-                });
-            }
-        }
-        return result;
+    return await axios.get(apiURL+`blocks/${pagenum}`)
+    .catch(function (error) {
+      if (error.response) {
+        console.log(error.response);
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+      console.log(error.config);
     });
 }

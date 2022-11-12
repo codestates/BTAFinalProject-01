@@ -1,46 +1,37 @@
 import React, { useState, useEffect } from 'react'
 import { Table, Button } from "antd";
 import * as addAPI from '../../APIs/addAPI';
-import * as time from '../../utils/handleTime';
+import * as handleAdd from '../../utils/handleAdd';
 import * as col from '../../utils/columnForm';
 
 function AddList() {
     const [data, setData] = useState([]);
-    const [pagenum, setPagenum] = useState(1);
-    const pageInc = () => { setPagenum(pagenum + 1); };
-    const pageDec = () => { if (pagenum > 1) {setPagenum(pagenum -1);} };
 
-    const parseBalance = (list, assetId) => {
-        if (list.length === 0) {return 0}
-        else {
-            for (let el of list) {
-                if (el.asset.slice(0,5) == assetId) {return el.value;}
-            }
-        }
-        return 0;
-    };
+    let addresses = [];
+
     const getData = async () => {
         const res = await addAPI.getAddList();
-        if (res.length > 0) {
-            const res2 = res.map((el,idx) => {
-                const neo = parseBalance(el.balances, "0xc56");
-                const gas = parseBalance(el.balances, "0x602");
-                return ({
-                    key : idx,
-                    address: el.address,
-                    script_hash: el.script_hash,
-                    created_time: el.created_time,
-                    neo: neo,
-                    gas: gas,
-                });
-            });
-            setData(res2);
-        };
+        await res.forEach( async (add) => {
+            let obj = {
+                address: add, 
+                gas: 0, 
+                neo: 0, 
+                lastupdatedblock:0, 
+                script_hash: handleAdd.getScriptHashFromAddress(add)
+            };
+            const result = await addAPI.getAddBalance(add);
+            obj.gas = handleAdd.parseBalance(result,"0xd2a");
+            obj.neo = handleAdd.parseBalance(result,"0xef4");
+            obj.lastupdatedblock = handleAdd.getLastBlock(result);
+            addresses.push(obj);
+            setData(addresses)
+        })
+        
     };
 
     useEffect(() => {
         getData();
-    }, [pagenum]);
+    }, []);
 
     return (
         <div className="site-card-wrapper">
@@ -52,11 +43,6 @@ function AddList() {
                 columns={col.addListColumns} 
                 pagination={false}
             />
-            <div style={{textAlign:"center"}}>
-                <Button onClick={pageDec}>{"<"}</Button>
-                <Button>{pagenum}</Button>
-                <Button onClick={pageInc} >{">"}</Button>
-            </div>
         </div>
     )
 }
