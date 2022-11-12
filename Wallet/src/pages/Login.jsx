@@ -10,7 +10,17 @@ const theme = createTheme();
 
 const Login = () => {
   const navigate = useNavigate();
-
+  const [savedPassword, setSavedPassword] = useState();
+  
+  const handlePassword = () => {
+    // chrome.storage.local.get("Nep2Key", (res) => {
+    // 	setSavedPassword(res.Nep2Key);
+    // 	console.log(res.Nep2Key);
+    // 	console.log(savedPassword);
+    // });
+    console.log('Login Success')
+  };
+  
   const handleLogin = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -63,6 +73,7 @@ const Login = () => {
               </Grid>
               <Button
                 type="submit"
+                onClick={handlePassword}
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}

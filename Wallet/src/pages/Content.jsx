@@ -62,10 +62,20 @@ const Content = () => {
 						<Typography variant="h6">Token Balance</Typography>
 						<Typography>NEO</Typography>
 					</Stack>
-					<Button variant="contained" component={Link} to="/transfer">
-						Transfer
-					</Button>
+					<Stack spacing={2} direction="column" justifyContent="center" alignItems="center">
+						<Button fullWidth variant="contained" component={Link} to="/transfer">
+							Transfer
+						</Button>
+						<Button fullWidth variant="contained" component={Link} to="/multisigtransfer">
+							MultiSig Transfer
+						</Button>
+						<Button fullWidth variant="contained" component={Link} to="/signtransaction">
+							Get MultiSig TX
+						</Button>
+					</Stack>
+					
 				</Stack>
+				
 			</Box>
 			<Divider />
 

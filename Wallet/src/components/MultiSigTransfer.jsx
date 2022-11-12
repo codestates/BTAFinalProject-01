@@ -3,7 +3,7 @@ import React from "react";
 import { Typography, Box, Stack, TextField, FormControl, InputLabel, Select, MenuItem, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
-const Transfer = () => {
+const MultiSigTransfer = () => {
 	const [token, setToken] = React.useState("");
 
 	const handleChange = (event) => {
@@ -14,12 +14,12 @@ const Transfer = () => {
 		<>
 			<Box sx={{ p: 3 }}>
 				<Stack spacing={2} direction="column" justifyContent="center">
-					<Typography variant="h6">Token Transfer</Typography>
+					<Typography variant="h6">MultiSig Transfer</Typography>
 					<Stack direction="column" justifyContent="space-evenly" alignItems="left" spacing={1}>
 						<Typography align="left" variant="h7">
 							보내는 사람
 						</Typography>
-						{/* 내 어카운트의 address default로 넣기 */}
+						{/* 내 어카운트의 multisig address default로 넣기 */}
 						<TextField id="FromAddress" defaultValue="my address" label="From Address" variant="outlined" size="small" />
 					</Stack>
 					<Stack direction="column" justifyContent="space-between" alignItems="left" spacing={1}>
@@ -58,4 +58,4 @@ const Transfer = () => {
 	);
 };
 
-export default Transfer;
+export default MultiSigTransfer;

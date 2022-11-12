@@ -22,7 +22,7 @@ const Home = () => {
 			</Stack>
 
 			<Stack direction="column" justifyContent="flex-start" alignItems="center" spacing={1}>
-				<Link component={Link} to="/" variant="body2">
+				<Link component={Link} to="/findmnemonic" variant="body2">
 					패스워드를 잊으셨나요?
 				</Link>
         		<Link component={Link} to="/initaccount" variant="body2">

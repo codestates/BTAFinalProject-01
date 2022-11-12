@@ -48,6 +48,9 @@ const Navbar = () => {
 								<MenuItem value={20}>
 									<Typography variant="subtitle2">Testnet</Typography>
 								</MenuItem>
+								<MenuItem value={30}>
+									<Typography variant="subtitle2">Private</Typography>
+								</MenuItem>
 							</Select>
 						</FormControl>
 
