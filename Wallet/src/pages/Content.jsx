@@ -57,19 +57,18 @@ const Content = () => {
 					</Modal>
 
 					<Avatar><PaidRoundedIcon/></Avatar>
-					<Typography>TOKEN NAME</Typography>
 					<Stack spacing={1} direction="row" justifyContent="center" alignItems="center">
 						<Typography variant="h6">Token Balance</Typography>
 						<Typography>NEO</Typography>
 					</Stack>
 					<Stack spacing={2} direction="column" justifyContent="center" alignItems="center">
-						<Button fullWidth variant="contained" component={Link} to="/transfer">
+						<Button fullWidth size="small" variant="contained" component={Link} to="/transfer">
 							Transfer
 						</Button>
-						<Button fullWidth variant="contained" component={Link} to="/multisigtransfer">
+						<Button fullWidth size="small" variant="contained" component={Link} to="/multisigtransfer">
 							MultiSig Transfer
 						</Button>
-						<Button fullWidth variant="contained" component={Link} to="/signtransaction">
+						<Button fullWidth size="small" variant="contained" component={Link} to="/signtransaction">
 							Get MultiSig TX
 						</Button>
 					</Stack>
