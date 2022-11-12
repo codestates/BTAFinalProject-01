@@ -22,10 +22,10 @@ const Home = () => {
 			</Stack>
 
 			<Stack direction="column" justifyContent="flex-start" alignItems="center" spacing={1}>
-				<Link href="#" variant="body2">
+				<Link component={Link} to="/" variant="body2">
 					패스워드를 잊으셨나요?
 				</Link>
-        		<Link href="#" variant="body2">
+        		<Link component={Link} to="/initaccount" variant="body2">
 					복구 구문을 잊으셨나요?
 				</Link>
 			</Stack>

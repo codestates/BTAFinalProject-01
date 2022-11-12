@@ -13,6 +13,8 @@ import Setting from "./components/Setting";
 import Transfer from "./components/Transfer";
 import MyAccount from "./components/MyAccount";
 import ShowMnemonic from "./components/ShowMnemonic";
+import InitAccount from "./components/InitAccount";
+import SignTransaction from "./components/SignTransaction";
 
 const App = () => {
 	return (
@@ -27,6 +29,8 @@ const App = () => {
 			<Route path="/transfer" element={<Transfer />} />
 			<Route path="/myaccount" element={<MyAccount />} />
 			<Route path="/showmnemonic" element={<ShowMnemonic />} />
+			<Route path="/initaccount" element={<InitAccount />} />
+			<Route path="/signtransaction" element={<SignTransaction />} />
 		</Routes>
 	);
 };
