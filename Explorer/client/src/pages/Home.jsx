@@ -5,11 +5,12 @@ import Overview from '../../src/components/home/overview';
 import LatestBlock from '../../src/components/home/lastestBlock';
 import LatestTx from '../../src/components/home/lastestTx';
 import { Col, Row } from "antd";
+import SearchBox from '../components/home/searchBox';
 
 function Home() {
   return (
     <div style={{marginLeft : "25%"}}>
-      <h2>Search</h2>
+      <SearchBox />
       <Overview />
       <Row gutter={16}>
         <Col span={9}>
