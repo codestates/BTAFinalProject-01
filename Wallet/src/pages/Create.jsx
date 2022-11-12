@@ -1,10 +1,11 @@
+/*global chrome*/
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { Typography, Avatar, Button, CssBaseline, TextField, Grid, Box, Container, Alert, Stack } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { setPassword } from "../utils/storage.js";
+// import { setPassword } from "../utils/storage.js";
 import * as walletAPI from '../APIs/walletAPI';
 
 const theme = createTheme();
@@ -17,7 +18,7 @@ const Create = () => {
 		console.log(myPassword);
 	}, [myPassword]);
 
-  const [isPasswordSame, setIsPasswordSame] = useState(true);
+  	const [isPasswordSame, setIsPasswordSame] = useState(true);
 
 	const handleSubmit = async(event) => {
 		event.preventDefault();
@@ -28,12 +29,13 @@ const Create = () => {
 			setIsPasswordSame(true);
 			setMyPassword(password);
 			console.log('set password');
-			const res = await walletAPI.createWallet(password);
-			console.log(res);
-			//TODO: Save 'res' in local storage
-			// setPassword().then((res) => {
-			// 	navigate(`/showmnemonic`);
-			// })
+			const createRes = await walletAPI.createWallet(password);
+			console.log(createRes);
+			console.log(createRes.nep2Key);
+			const balanceRes = await walletAPI.checkBalance(createRes.address);
+			console.log(balanceRes);
+			// chrome.storage.local.set({ Nep2Key: Nep2Key });
+			
 			navigate(`/showmnemonic`);
 		} else {
 			setIsPasswordSame(false);

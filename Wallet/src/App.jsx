@@ -7,12 +7,17 @@ import Home from "./pages/Home";
 import Content from "./pages/Content";
 import Login from "./pages/Login";
 import Create from "./pages/Create";
+import Test from "./pages/test";
 import Account from "./components/Account";
 import TokenList from "./components/TokenList";
 import Setting from "./components/Setting";
 import Transfer from "./components/Transfer";
+import MultiSigTransfer from "./components/MultiSigTransfer";
 import MyAccount from "./components/MyAccount";
 import ShowMnemonic from "./components/ShowMnemonic";
+import InitAccount from "./components/InitAccount";
+import SignTransaction from "./components/SignTransaction";
+import FindMnemonic from "./components/FindMnemonic";
 
 const App = () => {
 	return (
@@ -25,8 +30,13 @@ const App = () => {
 			<Route path="/tokenlist" element={<TokenList />} />
 			<Route path="/setting" element={<Setting />} />
 			<Route path="/transfer" element={<Transfer />} />
-      <Route path="/myaccount" element={<MyAccount />} />
-      <Route path="/showmnemonic" element={<ShowMnemonic />} />
+			<Route path="/multisigtransfer" element={<MultiSigTransfer />} />
+			<Route path="/myaccount" element={<MyAccount />} />
+			<Route path="/showmnemonic" element={<ShowMnemonic />} />
+			<Route path="/initaccount" element={<InitAccount />} />
+			<Route path="/signtransaction" element={<SignTransaction />} />
+			<Route path="/findmnemonic" element={<FindMnemonic />} />
+			<Route path="/test" element={<Test />} />
 		</Routes>
 	);
 };

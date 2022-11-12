@@ -11,10 +11,8 @@ import {
 	Divider,
 	ListItemIcon,
 	FormControl,
-	InputLabel,
 	Select,
-	Avatar,
-	Button,
+	Avatar
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import PersonAdd from "@mui/icons-material/PersonAdd";
@@ -49,6 +47,9 @@ const Navbar = () => {
 								</MenuItem>
 								<MenuItem value={20}>
 									<Typography variant="subtitle2">Testnet</Typography>
+								</MenuItem>
+								<MenuItem value={30}>
+									<Typography variant="subtitle2">Private</Typography>
 								</MenuItem>
 							</Select>
 						</FormControl>

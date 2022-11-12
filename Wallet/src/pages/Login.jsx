@@ -1,18 +1,41 @@
+/*global chrome*/
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { Typography, Avatar, Button, CssBaseline, TextField, FormControl, FormControlLabel, Checkbox, Link, Grid, Box, Container } from "@mui/material";
+import { Typography, Avatar, Button, CssBaseline, TextField, Grid, Box, Container } from "@mui/material";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [savedPassword, setSavedPassword] = useState();
+  
+  const handlePassword = () => {
+    // chrome.storage.local.get("Nep2Key", (res) => {
+    // 	setSavedPassword(res.Nep2Key);
+    // 	console.log(res.Nep2Key);
+    // 	console.log(savedPassword);
+    // });
+    console.log('Login Success')
+  };
+  
   const handleLogin = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       password: data.get('password')
     });
+    // chrome.storage.sync.get(
+    //   ['password'], function (result) {
+    //     if (password == result.password) {
+
+    //       alert('로그인 성공')
+    //       navigate(`/content`);
+    //     }
+    //   }
+    // )
   };
 
   return (
@@ -50,6 +73,7 @@ const Login = () => {
               </Grid>
               <Button
                 type="submit"
+                onClick={handlePassword}
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
