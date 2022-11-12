@@ -1,4 +1,4 @@
-import Neon, { rpc } from "@cityofzion/neon-js";
+import Neon from "@cityofzion/neon-js";
 
 const url = process.env.REACT_APP_PRIVATE_RPC_URL;
 const rpcClient = Neon.create.rpcClient(url);
