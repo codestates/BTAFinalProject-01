@@ -10,7 +10,7 @@ console.log(url);
 
 export const createWallet = async (password) => {
 
-    const mnemonicCode = ethers.utils.entropyToMnemonic(ethers.utils.randomBytes(32));
+    const mnemonicCode = ethers.utils.entropyToMnemonic(ethers.utils.randomBytes(16));
     const mnemonicWallet = ethers.utils.HDNode.fromMnemonic(mnemonicCode, password);
     const privateKey = mnemonicWallet.privateKey.substring(2);
     const userAccount = new wallet.Account(privateKey);
@@ -23,7 +23,8 @@ export const createWallet = async (password) => {
     return {'nep2Key': nep2Key,
             'address': userAccount.label,
             'mnemonic': mnemonicCode,
-            'publicKey': userAccount.publicKey
+            'publicKey': userAccount.publicKey,
+            'privateKey': userAccount.privateKey
             };
 }
 

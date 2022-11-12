@@ -34,7 +34,14 @@ const Create = () => {
 			console.log(createRes.nep2Key);
 			const balanceRes = await walletAPI.checkBalance(createRes.address);
 			console.log(balanceRes);
-			// chrome.storage.local.set({ Nep2Key: Nep2Key });
+			// 익스텐션 추가 시 주석 해제!!
+			// chrome.storage.local.set({ 
+			// 	nep2Key: nep2Key,
+			// 	address: address,
+			// 	mnemonic: mnemonic,
+			// 	publicKey: publicKey,
+			// 	privateKey: privateKey
+			//  });
 			
 			navigate(`/showmnemonic`);
 		} else {

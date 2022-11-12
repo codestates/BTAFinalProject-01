@@ -30,7 +30,6 @@ const Login = () => {
     // chrome.storage.sync.get(
     //   ['password'], function (result) {
     //     if (password == result.password) {
-
     //       alert('로그인 성공')
     //       navigate(`/content`);
     //     }
@@ -67,13 +66,13 @@ const Login = () => {
                     type="password"
                     id="password"
                     autoComplete="new-password"
+                    onChange={handlePassword}
                   />
                 </Grid>
                 
               </Grid>
               <Button
                 type="submit"
-                onClick={handlePassword}
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}

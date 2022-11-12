@@ -19,8 +19,8 @@ const InitAccount = () => {
 				<Stack spacing={4} direction="column" justifyContent="center"
         sx={{ p: 2, m: 2 }}
         >
-					<Typography variant="h7">요청 내역 :</Typography>
-					<Typography variant="h7" color="primary">
+					<Typography variant="body1">요청 내역 :</Typography>
+					<Typography variant="body1" color="primary">
 						해당 요청에 사인 하시겠습니까?
 					</Typography>
 				</Stack>
