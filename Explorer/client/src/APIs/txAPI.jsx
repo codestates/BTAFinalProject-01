@@ -1,8 +1,10 @@
 import axios from 'axios';
+const url = process.env.REACT_APP_RESTFUL_API;
 
 export const getTxInfo = async (txid) => {
-    return await axios.get(`http://218.145.108.222:5005/transactions/${txid}`)
+    return await axios.get(url+`transaction/${txid}`)
     .catch(function (error) {
+        console.log(error);
       if (error.response) {
         console.log(error.response);
       } else if (error.request) {
@@ -15,7 +17,7 @@ export const getTxInfo = async (txid) => {
 }
 
 export const get5TxList = async () => {
-    return await axios.get(`http://218.145.108.222:5005/transactions/1`)
+    return await axios.get(url+`transactions/1`)
     .catch(function (error) {
       if (error.response) {
         console.log(error.response);
@@ -29,7 +31,7 @@ export const get5TxList = async () => {
 }
 
 export const getPageTxList = async (pagenum) => {
-    return await axios.get(`http://218.145.108.222:5005/transactions/${pagenum}`)
+    return await axios.get(url + `transactions/${pagenum}`)
     .catch(function (error) {
       if (error.response) {
         console.log(error.response);

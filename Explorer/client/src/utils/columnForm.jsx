@@ -37,14 +37,14 @@ export const lastedTxColumns = [
         key: 'block',
     },
     {
+        title: 'Gas',
+        dataIndex: 'gas',
+        key: 'gas',
+    },
+    {
         title: 'Size',
         dataIndex: 'size',
         key: 'size',
-    },
-    {
-        title: 'Time',
-        dataIndex: 'time',
-        key: 'time',
     },
   ];
 
@@ -62,8 +62,8 @@ export const lastedTxColumns = [
     },
     {
         title: 'Txs Count',
-        dataIndex: 'txs',
-        key: 'txs',
+        dataIndex: 'txCount',
+        key: 'txCount',
     },
     {
         title: 'Size',
@@ -92,14 +92,14 @@ export const txListColumns = [
         key: 'block',
     },
     {
+        title: 'Gas',
+        dataIndex: 'gas',
+        key: 'gas',
+    },
+    {
         title: 'Size',
         dataIndex: 'size',
         key: 'size',
-    },
-    {
-        title: 'Time',
-        dataIndex: 'time',
-        key: 'time',
     },
 ];
 
@@ -118,9 +118,9 @@ export const txListColumns = [
         key: 'script_hash',
     },
     {
-        title: 'Created time',
-        dataIndex: 'created_time',
-        key: 'created_time',
+        title: 'Last updated block',
+        dataIndex: 'lastupdatedblock',
+        key: 'lastupdatedblock',
     },
     {
         title: 'Neo',
@@ -137,24 +137,24 @@ export const txListColumns = [
 export const nep17ListColumns = [
     {
         title: 'Tx hash',
-        dataIndex: 'txhash',
-        key: 'txhash',
-        render : text => <a href={`http://localhost:3000/txs/${text}`}>
-                            {text}
+        dataIndex: 'txid',
+        key: 'txid',
+        render : text => <a href={`http://localhost:3000/txs/${text.slice(2,)}`}>
+                            {text.slice(2,)}
                         </a>
     },
     {
         title: 'Transfer address',
-        dataIndex: 'transferAddress',
-        key: 'transferAddress',
+        dataIndex: 'transferaddress',
+        key: 'transferaddress',
         render : text => <a href={`http://localhost:3000/addresses/${text}`}>
                             {text}
                         </a>
     },
     {
         title: 'Token name',
-        dataIndex: 'tokemName',
-        key: 'tokemName',
+        dataIndex: 'tokenType',
+        key: 'tokenType',
     },
     {
         title: 'Amount',
@@ -165,5 +165,10 @@ export const nep17ListColumns = [
         title: 'Block index',
         dataIndex: 'blockindex',
         key: 'blockindex',
+    },
+    {
+        title: 'Time',
+        dataIndex: 'time',
+        key: 'time',
     },
   ];

@@ -8,7 +8,7 @@ function LastestTx() {
     const [data, setData] = useState([]);
     const getData = async () => {
         const res = await txAPI.get5TxList();
-        setData(res.data.transactions.slice(0,5));
+        setData(res.data.items);
     };
 
     useEffect(() => {
@@ -21,7 +21,9 @@ function LastestTx() {
                 Lastest Transactions
             </h2>
             <Table 
-                dataSource={data.map((el) => {el.time = time.Unix_timestamp(el.time); return el})} 
+                dataSource={
+                    data.slice(0,5)
+                } 
                 columns={col.lastedTxColumns} 
                 pagination={false} 
             />;

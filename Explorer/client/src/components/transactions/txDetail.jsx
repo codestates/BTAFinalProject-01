@@ -7,23 +7,22 @@ import * as handleTime from '../../utils/handleTime';
 function TxInfo() {
     const location = useLocation();
     const txid = location.pathname.split("/").pop();
-    const [data, setData] = useState();
-    // const [witnesses, setWitnesses] = useState([]);
-    // const [signers, setSigners] = useState([]);
+    const [data, setData] = useState({});
+    const [witnesses, setWitnesses] = useState([]);
+    const [signers, setSigners] = useState([]);
 
     const getData = async () => {
         const res = await txAPI.getTxInfo(txid);
         setData(res.data);
+        setWitnesses(res.data.witnesses);
+        setSigners(res.data.signers);
     };
 
-    // const {hash, blocktime, blockHeight, size, blockhash,
-    //     sender, netfee, sysfee, version, nonce} = tx_info;
+    const {hash, block_index, size, sender, netfee, sysfee, version, nonce} = data;
 
-    // const {txid, blocktime, blockHeight, size, version, blockhash,
-    //      net_fee, sys_fee, type } = tx_info;
     useEffect(() => {
         getData();
-    }, []);
+    }, [witnesses, signers]);
 
     const multiLine = (str) => {
         let result = "";
@@ -39,24 +38,18 @@ function TxInfo() {
     return (
         <div className="site-card-wrapper">
         <h2>Overveiw</h2>
-        {/* <Descriptions titl="" bordered>
+        <Descriptions titl="" bordered>
             <Descriptions.Item label="Tx hash" span={3}>
                 {hash}
             </Descriptions.Item>
-            <Descriptions.Item label="Block Time" span={3}>
-                {blocktime ?  handleTime.Unix_timestamp(blocktime) : "undefined"}
-            </Descriptions.Item>
             <Descriptions.Item label="Block Height" span={3}>
-                {blockHeight ? blockHeight : "undefined"}
+                {block_index ? block_index : "undefined"}
             </Descriptions.Item>
             <Descriptions.Item label="Version" span={3}>
                 {typeof(version) === "number" ? version : "undefined"}
             </Descriptions.Item>
             <Descriptions.Item label="Size" span={3}>
                 {size ? `${size} bytes` : "undefined"}
-            </Descriptions.Item>
-            <Descriptions.Item label="Block Hash" span={3}>
-                {blockhash ? blockhash : "undefined"}
             </Descriptions.Item>
             <Descriptions.Item label="Sender" span={3}>
                 {sender ? sender : "undefined"}
@@ -96,7 +89,7 @@ function TxInfo() {
                 {witnesses.length ? multiLine(witnesses[0].verification) : "no script"}
             </Card>
           </Col>
-        </Row> */}
+        </Row>
       </div>
     )
 }

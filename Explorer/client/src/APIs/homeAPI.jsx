@@ -1,7 +1,9 @@
 import axios from 'axios';
+import { CONST, rpc, sc, wallet, tx, u } from "@cityofzion/neon-core";
+const url = process.env.REACT_APP_RESTFUL_API;
 
 export const getLastestInfo = async () => {
-    return await axios.get('http://218.145.108.222:5005/stats')
+    return await axios.get(url+'stats')
     .catch(function (error) {
       if (error.response) {
         console.log(error.response);

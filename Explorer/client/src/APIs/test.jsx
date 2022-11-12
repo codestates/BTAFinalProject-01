@@ -1,4 +1,8 @@
 import { CONST, rpc, sc, wallet, tx, u } from "@cityofzion/neon-core";
+import base58 from "bs58";
+
+const url = process.env.REACT_APP_PRIVATE_RPC_URL;
+const rpcClient = new rpc.RPCClient(url);
 
 const sendToAdd = async (acct) => {
     let query = new rpc.Query({ 
@@ -184,4 +188,49 @@ export const transfer = async () => {
 
     const res2 = await rpcClient.getNep17Balances(account2.address);
     console.log(2, res2);
+}
+
+export const encodedTx = async () => {
+    const privateKey1 = wallet.generatePrivateKey();
+    const privateKey2 = wallet.generatePrivateKey();
+
+    const account1 = new wallet.Account(privateKey1);
+    const account2 = new wallet.Account(privateKey2);
+
+    const tokenAmount = 200;
+
+    const script = sc.createScript({
+        scriptHash: CONST.NATIVE_CONTRACT_HASH.NeoToken,
+        operation: "transfer",
+        args: [
+        sc.ContractParam.hash160(account1.address),
+        sc.ContractParam.hash160(account2.address),
+        sc.ContractParam.integer(tokenAmount),
+        sc.ContractParam.any(),
+        ],
+    });
+
+
+    const currentHeight = await rpcClient.getBlockCount();
+
+    const newTx = new tx.Transaction({
+      signers: [
+        {
+          account: account1.scriptHash,
+          scopes: tx.WitnessScope.CalledByEntry,
+        },
+      ],
+      validUntilBlock: currentHeight + 10,
+      systemFee: "1000001",
+      networkFee: "1000001",
+      script,
+    });
+
+    const x1 = newTx.serialize();
+    console.log(x1);
+    const x2 = base58.encode(u.hexstring2ab(x1));
+    // console.log(x2);
+    // const x3 = u.ab2hexstring(base58.decode(x2));
+    // console.log(tx.Transaction.deserialize(x3));
+
 }
