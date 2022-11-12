@@ -48,14 +48,11 @@ export const checkBalance = async (address) => {
 
 
 export const transfer = async (userAccount, toAddress, tokenAmount) => {
-    // const networkMagic = Number(process.env.NETWORK_MAGIC);
-    // const systemFee = process.env.SYSTEM_FEE;
-    // const networkFee = process.env.NETWORK_FEE;
-    // const heightIncrease = Number(process.env.TRANSFER_HEIGHT_INCREASE);
-    const networkMagic = 5195086;
-    const systemFee = "100000001";
-    const networkFee = "100000001";
-    const heightIncrease = 10;
+    const networkMagic = Number(process.env.REACT_APP_NETWORK_MAGIC);
+    const systemFee = process.env.REACT_APP_SYSTEM_FEE;
+    const networkFee = process.env.REACT_APP_NETWORK_FEE;
+    const heightIncrease = Number(process.env.REACT_APP_TRANSFER_HEIGHT_INCREASE);
+
     const script = sc.createScript({
         scriptHash: CONST.NATIVE_CONTRACT_HASH.GasToken,
         operation: "transfer",
