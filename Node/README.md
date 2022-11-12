@@ -39,10 +39,7 @@ curl http://127.0.0.1:40332 -d '{"jsonrpc":"2.0","method":"getnep17balances","pa
 ```
 
 ## INFO
-도커파일은 아래 3개의 노드로 구성됨
-- Consensus node
-- Client1 node
-- Client2 node
+도커파일은 아래 3개의 노드(Consensus,Client1,Client2)로 구성됨
 
 * **Consensus**
   * Address: `NM7Aky765FG8NhhwtxjXRx7jEL1cnw7PBP`
@@ -50,13 +47,14 @@ curl http://127.0.0.1:40332 -d '{"jsonrpc":"2.0","method":"getnep17balances","pa
     * NEP-2 encrypted: `6PYM7jHL4GmS8Aw2iEFpuaHTCUKjhT4mwVqdoozGU6sUE25BjV4ePXDdLz`
     * WIF: `L1eV34wPoj9weqhGijdDLtVQzUpWGHszXXpdU9dPuh2nRFFzFa7E`
   * MultiSig Address (from the account above, 1/1): `NXXazKH39yNFWWZF5MJ8tEN98VYHwzn7g3`
-    * Script: `110c21033a4d051b04b7fc0230d2b1aaedfd5a84be279a5361a7358db665ad7857787f1b11419ed0dc3a`  
-  * JSON-RPC: `localhost:40332`
+    * JSON-RPC: `localhost:40332`
+
 * **Client1**
   * Address: `NV1Q1dTdvzPbThPbSFz7zudTmsmgnCwX6c`    
     * PrivKey: `beae38739915555a75a9281a5928b10ebc265f9c881aa21e963610a6c606a3dc`    
     * WIF: `L3cNMQUSrvUrHx1MzacwHiUeCWzqK2MLt5fPvJj9mz6L2rzYZpok`
   * JSON-RPC: `localhost:10332`
+  
 * **Client2**
   * Address: `NhJX9eCbkKtgDrh1S4xMTRaHUGbZ5Be7uU`    
     * PubKey: `037279f3a507817251534181116cb38ef30468b25074827db34cbbc6adc8873932`
