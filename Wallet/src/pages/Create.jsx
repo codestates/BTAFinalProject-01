@@ -29,11 +29,9 @@ const Create = () => {
 			setIsPasswordSame(true);
 			setMyPassword(password);
 			console.log('set password');
-			const res = await walletAPI.createWallet(password);
-			console.log(res);
-			console.log(res.nep2Key);
-			const Nep2Key = res.nep2Key;
-			console.log(Nep2Key);
+			const createRes = await walletAPI.createWallet(password);
+			console.log(createRes);
+			console.log(createRes.nep2Key);
 			// chrome.storage.local.set({ Nep2Key: Nep2Key });
 			
 			navigate(`/showmnemonic`);
