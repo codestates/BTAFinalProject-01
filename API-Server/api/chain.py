@@ -3,8 +3,7 @@ import os
 from db import db as blockchain_db
 
 
-#nodeAPI = os.environ.get('NODEAPI', 'http://127.0.0.0:30333')
-nodeAPI = os.environ.get('NODEAPI', 'http://218.145.108.222:30333')
+nodeAPI = os.environ.get('NODEAPI', 'http://127.0.0.0:30333')
 
 appName = os.environ.get('neo')
 net = os.environ.get('NET', 'PrivNet')
