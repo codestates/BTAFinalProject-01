@@ -1,8 +1,7 @@
 
-<div align="center" style="margin-top: 50pt; margin-bottom: 50px;">  
-<h1>neo3-privatenet-docker</h1>
-<p align="center" style="margin-top: 30pt;">  
-</p>
+
+<h1>neo3-privatenet-docker setup</h1>
+
 
 ## Highlights
 
@@ -68,7 +67,7 @@ curl http://127.0.0.1:40332 -d '{"jsonrpc":"2.0","method":"getnep17balances","pa
 * **Wallet passphrase**: `neo`
 
 # 참조 (아래)
-AxLabs/neo3-privatenet-docker를 참고 하였습니다.
+AxLabs/neo3-privatenet-docker
 
 
 
