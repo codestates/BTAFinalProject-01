@@ -8,7 +8,6 @@ client = MongoClient(MONGOURL)
 
 db = client[MONGOAPP]
 
-
 transaction_db = db['transactions']
 blockchain_db = db['blockchain']
 meta_db = db['meta']

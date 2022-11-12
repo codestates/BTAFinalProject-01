@@ -1,18 +1,11 @@
-from flask import Flask, Blueprint
+from flask import Blueprint
 from flask import jsonify
 from bson import json_util
+from db import transaction_db, blockchain_db, address_db, trans_db
+from chain import convert_txid
 import json
-from pymongo import MongoClient
-from flask import request
-from db import transaction_db, blockchain_db, meta_db, logs_db, address_db, trans_db
-from chain import storeBlockInDB, get_highest_node,  convert_txid
-from util import ANS_ID, ANC_ID
 
 api = Blueprint('api', __name__)
-
-NET = 'Private'
-
-symbol_dict = {ANS_ID: "NEO", ANC_ID: "GAS"}
 
 
 def db2json(db_obj):
