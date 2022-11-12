@@ -22,7 +22,6 @@ export const createWallet = async (password) => {
     return {'nep2Key': nep2Key,
             'address': userAccount.label,
             'mnemonic': mnemonicCode,
-            'publicKey': userAccount.publicKey,
             'WIF': userAccount.WIF,
             'privateKey': privateKey,
             'scriptHash': userAccount.scriptHash
