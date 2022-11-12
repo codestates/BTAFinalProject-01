@@ -15,12 +15,12 @@ const Login = () => {
   const [savedWIF, setSavedWIF] = useState();
 
   // 웹에서 볼 때 주석 처리 !!
-  // chrome.storage.local.get(["nep2Key", "WIF" ], (res) => {
-  //   setSavedNep2(res.nep2Key);
-  //   setSavedWIF(res.WIF);
-  //   console.log(savedNep2);
-  //   console.log(savedWIF);
-  // });
+  chrome.storage.local.get(["nep2Key", "WIF" ], (res) => {
+    setSavedNep2(res.nep2Key);
+    setSavedWIF(res.WIF);
+    console.log(savedNep2);
+    console.log(savedWIF);
+  });
   
   const handleLogin = async (event) => {
     event.preventDefault();

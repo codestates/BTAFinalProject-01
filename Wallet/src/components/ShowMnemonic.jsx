@@ -11,11 +11,11 @@ const ShowMnemonic = () => {
   const [copied, setCopied] = useState(false);
 
   // 웹에서 볼 때 주석 처리 !!
-  // chrome.storage.local.get("mnemonic", (res) => {
-	// 	setSavedMnemonic(res.mnemonic);
-	// 	console.log(res.mnemonic);
-	// 	console.log(savedMnemonic);
-	// });
+  chrome.storage.local.get("mnemonic", (res) => {
+		setSavedMnemonic(res.mnemonic);
+		console.log(res.mnemonic);
+		console.log(savedMnemonic);
+	});
   
   const handleCopy = () => {
     setCopied(true);

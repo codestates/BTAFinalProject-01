@@ -24,6 +24,7 @@ export const createWallet = async (password) => {
             'mnemonic': mnemonicCode,
             'WIF': userAccount.WIF,
             'privateKey': privateKey,
+            'publicKey': userAccount.publicKey,
             'scriptHash': userAccount.scriptHash
             };
 }
