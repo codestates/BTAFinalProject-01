@@ -1,6 +1,7 @@
 // 타임스탬프 값을 년월일로 변환
 export const Unix_timestamp = (t) => {
-    var date = new Date(t*1000);
+    t = parseInt(t);
+    var date = new Date(t);
     var year = date.getFullYear();
     var month = "0" + (date.getMonth()+1);
     var day = "0" + date.getDate();
