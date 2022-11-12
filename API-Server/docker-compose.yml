@@ -1,0 +1,8 @@
+version: "3"
+services:
+  my-mongo:
+    image: mongo
+    environment:
+      - MONGODB_APPLICATION_DATABASE=neo
+    ports:
+      - "27017:27017"

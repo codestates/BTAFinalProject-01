@@ -1,0 +1,73 @@
+version: '3.7'
+
+services:  
+
+  build-neo-cli:
+    build:
+      context: ./neo-node
+    image: ghcr.io/axlabs/neo3-privatenet-docker/neo-cli:${IMAGE_TAG}
+
+  build-neo-cli-with-plugins:
+    build:
+      context: ./neo-modules
+      dockerfile: ../docker/Dockerfile
+      target: NeoCliFinal
+      args:
+        IMAGE_TAG: ${IMAGE_TAG}
+    image: ghcr.io/axlabs/neo3-privatenet-docker/neo-cli-with-plugins:${IMAGE_TAG}
+    depends_on:
+      - build-neo-cli
+
+  neo-consensus:
+    image: ghcr.io/axlabs/neo3-privatenet-docker/neo-cli-with-plugins:${IMAGE_TAG}
+    hostname: neo-consensus
+    container_name: neo-consensus
+    depends_on:
+      - build-neo-cli-with-plugins
+    volumes:
+      - ./config/config-consensus.privatenet3.json:/neo-cli/config.json:ro
+      - ./config/wallet-consensus.privatenet3.json:/neo-cli/wallet.json:rw
+      - ./config/rpcserver.config-consensus.json:/neo-cli/Plugins/RpcServer/config.json:ro
+      - ./config/dbft.config-consensus.json:/neo-cli/Plugins/DBFTPlugin/config.json:ro
+      - ./config/applicationlogs.config-consensus.json:/neo-cli/Plugins/ApplicationLogs/config.json:ro
+      - ./config/oracle.config-consensus.json:/neo-cli/Plugins/OracleService/config.json:ro
+      - ./config/tokentracker.config-consensus.json:/neo-cli/Plugins/TokensTracker/config.json:ro
+      - ./config/stateservice.config-consensus.json:/neo-cli/Plugins/StateService/config.json:ro
+    ports:
+      - "40332:40332"
+
+  neo-client1:
+    image: ghcr.io/axlabs/neo3-privatenet-docker/neo-cli-with-plugins:${IMAGE_TAG}
+    hostname: neo-client1
+    container_name: neo-client1
+    depends_on:
+      - build-neo-cli-with-plugins
+      - neo-consensus
+    volumes:
+      - ./config/config-client1.privatenet3.json:/neo-cli/config.json:ro
+      - ./config/wallet-client1.privatenet3.json:/neo-cli/wallet.json:rw
+      - ./config/rpcserver.config-client1.json:/neo-cli/Plugins/RpcServer/config.json:ro
+      - ./config/applicationlogs.config-client1.json:/neo-cli/Plugins/ApplicationLogs/config.json:ro
+      - ./config/oracle.config-client1.json:/neo-cli/Plugins/OracleService/config.json:ro
+      - ./config/tokentracker.config-client1.json:/neo-cli/Plugins/TokensTracker/config.json:ro
+      - ./config/stateservice.config-client1.json:/neo-cli/Plugins/StateService/config.json:ro
+    ports:
+      - "10332:10332"
+
+  neo-client2:
+    image: ghcr.io/axlabs/neo3-privatenet-docker/neo-cli-with-plugins:${IMAGE_TAG}
+    hostname: neo-client2
+    container_name: neo-client2
+    depends_on:
+      - build-neo-cli-with-plugins
+      - neo-consensus
+    volumes:
+      - ./config/config-client2.privatenet3.json:/neo-cli/config.json:ro
+      - ./config/wallet-client2.privatenet3.json:/neo-cli/wallet.json:rw
+      - ./config/rpcserver.config-client2.json:/neo-cli/Plugins/RpcServer/config.json:ro
+      - ./config/applicationlogs.config-client2.json:/neo-cli/Plugins/ApplicationLogs/config.json:ro
+      - ./config/oracle.config-client2.json:/neo-cli/Plugins/OracleService/config.json:ro
+      - ./config/tokentracker.config-client2.json:/neo-cli/Plugins/TokensTracker/config.json:ro
+      - ./config/stateservice.config-client2.json:/neo-cli/Plugins/StateService/config.json:ro
+    ports:
+      - "20332:20332"
