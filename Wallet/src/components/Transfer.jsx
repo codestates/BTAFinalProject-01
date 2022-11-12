@@ -2,12 +2,24 @@
 import React from "react";
 import { Typography, Box, Stack, TextField, FormControl, InputLabel, Select, MenuItem, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import * as walletAPI from '../APIs/walletAPI';
 
 const Transfer = () => {
 	const [token, setToken] = React.useState("");
-
-	const handleChange = (event) => {
+	
+	const handleChange = async(event) => {
 		setToken(event.target.value);
+		console.log(token);
+		const userAccount = {
+			address: "NX3TCZ28zTppd53or2wQBjC5xXAXDyeLGP",
+			privateKey: "d3f757bf350b9e79197e739971d97fbacdc181abd3a6bb66c0d2ac85bd5b3fcb",
+			publicKey: "02144d47c73c2e74bf5cb427b3a526845143cb7e1727c1d397fdd3451728d9223b",
+			scriptHash: "753d85c69d9f6653d40af66e6637928a17ae137a"
+		}
+		const toAddress = 'NTcWc839XGP39YrCrWkZseXNtBCGGxrzkQ';
+		const tokenAmount = 5;
+		const result = await walletAPI.transfer(userAccount, toAddress, tokenAmount);
+		console.log(result);
 	};
 
 	return (
