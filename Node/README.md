@@ -62,7 +62,7 @@ curl http://127.0.0.1:40332 -d '{"jsonrpc":"2.0","method":"getnep17balances","pa
     * WIF: `L1RgqMJEBjdXcuYCMYB6m7viQ9zjkNPjZPAKhhBoXxEsygNXENBb`
   * JSON-RPC: `localhost:20332`
 
-* ** 지갑주소: `neo`
+* ** 지갑비밀번호: `neo`
 
 # 참조 (아래)
 AxLabs/neo3-privatenet-docker
