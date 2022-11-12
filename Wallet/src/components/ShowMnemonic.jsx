@@ -3,23 +3,27 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Typography, Stack, Button, Box, Grid, Paper } from "@mui/material";
 import { Link } from "react-router-dom";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const ShowMnemonic = () => {
 	const navigate = useNavigate();
   const [savedMnemonic, setSavedMnemonic] = useState();
+  const [copied, setCopied] = useState(false);
 
+  // 웹에서 볼 때 주석 처리 !!
   // chrome.storage.local.get("mnemonic", (res) => {
 	// 	setSavedMnemonic(res.mnemonic);
 	// 	console.log(res.mnemonic);
 	// 	console.log(savedMnemonic);
 	// });
-
+  
   const handleCopy = () => {
+    setCopied(true);
     console.log('copy mnemonic')
   };
 
   const handleContent= () => {
-    navigate("/content");
+    navigate("/login");
   };
 
 	return (
@@ -32,9 +36,12 @@ const ShowMnemonic = () => {
         <Box sx={{ p: 2 }}>
           <Typography>{savedMnemonic}</Typography>
         </Box>
-        <Button variant="outlined" color="success" align="left" onClick={handleCopy} size="small" sx={{ width:"30px", m: "1" }}>
-          복사
-        </Button>
+        <CopyToClipboard text={savedMnemonic} onCopy={handleCopy}>
+          <Button variant="outlined" color="success" align="left" onCopy={handleCopy} size="small" sx={{ width:"30px", m: "1" }}>
+            복사
+          </Button>
+        </CopyToClipboard>
+        
         <Button variant="contained" onClick={handleContent} sx={{ m: "1" }}>
           시작하기
         </Button>

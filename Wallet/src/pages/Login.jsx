@@ -5,36 +5,34 @@ import { Typography, Avatar, Button, CssBaseline, TextField, Grid, Box, Containe
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from "react-router-dom";
+import { wallet } from "@cityofzion/neon-js";
 
 const theme = createTheme();
 
 const Login = () => {
   const navigate = useNavigate();
-  const [savedPassword, setSavedPassword] = useState();
+  const [savedNep2, setSavedNep2] = useState();
+  const [savedWIF, setSavedWIF] = useState();
+
+  // 웹에서 볼 때 주석 처리 !!
+  // chrome.storage.local.get(["nep2Key", "WIF" ], (res) => {
+  //   setSavedNep2(res.nep2Key);
+  //   setSavedWIF(res.WIF);
+  //   console.log(savedNep2);
+  //   console.log(savedWIF);
+  // });
   
-  const handlePassword = () => {
-    // chrome.storage.local.get("Nep2Key", (res) => {
-    // 	setSavedPassword(res.Nep2Key);
-    // 	console.log(res.Nep2Key);
-    // 	console.log(savedPassword);
-    // });
-    console.log('Login Success')
-  };
-  
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      password: data.get('password')
-    });
-    // chrome.storage.sync.get(
-    //   ['password'], function (result) {
-    //     if (password == result.password) {
-    //       alert('로그인 성공')
-    //       navigate(`/content`);
-    //     }
-    //   }
-    // )
+    const pw = data.get('password');
+    console.log(pw);
+    
+    const decryptedKey = await wallet.decrypt(savedNep2, pw);
+    if (decryptedKey == savedWIF) {
+      alert('로그인 성공')
+      navigate("/content");
+    }
   };
 
   return (
@@ -66,7 +64,6 @@ const Login = () => {
                     type="password"
                     id="password"
                     autoComplete="new-password"
-                    onChange={handlePassword}
                   />
                 </Grid>
                 
