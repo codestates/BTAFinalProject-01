@@ -1,4 +1,6 @@
 import Neon, { wallet } from "@cityofzion/neon-js";
+import Axios from "axios";
+
 const ethers = require('ethers');
 
 const url = process.env.REACT_APP_PRIVATE_RPC_URL;
@@ -25,8 +27,19 @@ export const createWallet = async (password) => {
             };
 }
 
+
 // export const checkBalance = async (nep2Key) => {
 //     const res = await rpcClient.getNep17Balances(nep2Key);
 //     console.log(2, res);
 //     return res;
 // }
+
+export const checkBalance = async (address) => {
+    let res = await Axios.post(url, {
+      jsonrpc: "2.0",
+      method: "getnep17balances",
+      params: [address],
+      id: 1,
+    });
+    return res
+}

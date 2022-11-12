@@ -32,6 +32,8 @@ const Create = () => {
 			const createRes = await walletAPI.createWallet(password);
 			console.log(createRes);
 			console.log(createRes.nep2Key);
+			const balanceRes = await walletAPI.checkBalance(createRes.address);
+			console.log(balanceRes);
 			// chrome.storage.local.set({ Nep2Key: Nep2Key });
 			
 			navigate(`/showmnemonic`);
