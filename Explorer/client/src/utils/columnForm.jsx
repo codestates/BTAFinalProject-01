@@ -32,9 +32,9 @@ export const lastedTxColumns = [
                         </a>
     },
     {
-        title: 'Gas',
-        dataIndex: 'gas',
-        key: 'gas',
+        title: 'Block',
+        dataIndex: 'block',
+        key: 'block',
     },
     {
         title: 'Size',
@@ -87,14 +87,9 @@ export const txListColumns = [
                         </a>
     },
     {
-        title: 'Block Height',
-        dataIndex: 'blockHeight',
-        key: 'blockHeight',
-    },
-    {
-        title: 'Gas',
-        dataIndex: 'gas',
-        key: 'gas',
+        title: 'Block',
+        dataIndex: 'block',
+        key: 'block',
     },
     {
         title: 'Size',
@@ -105,5 +100,70 @@ export const txListColumns = [
         title: 'Time',
         dataIndex: 'time',
         key: 'time',
+    },
+];
+
+  export const addListColumns = [
+    {
+        title: 'Address',
+        dataIndex: 'address',
+        key: 'address',
+        render : text => <a href={`http://localhost:3000/addresses/${text}`}>
+                            {text}
+                        </a>
+    },
+    {
+        title: 'Script Hash',
+        dataIndex: 'script_hash',
+        key: 'script_hash',
+    },
+    {
+        title: 'Created time',
+        dataIndex: 'created_time',
+        key: 'created_time',
+    },
+    {
+        title: 'Neo',
+        dataIndex: 'neo',
+        key: 'neo',
+    },
+    {
+        title: 'Gas',
+        dataIndex: 'gas',
+        key: 'gas',
+    },
+  ];
+
+export const nep17ListColumns = [
+    {
+        title: 'Tx hash',
+        dataIndex: 'txhash',
+        key: 'txhash',
+        render : text => <a href={`http://localhost:3000/txs/${text}`}>
+                            {text}
+                        </a>
+    },
+    {
+        title: 'Transfer address',
+        dataIndex: 'transferAddress',
+        key: 'transferAddress',
+        render : text => <a href={`http://localhost:3000/addresses/${text}`}>
+                            {text}
+                        </a>
+    },
+    {
+        title: 'Token name',
+        dataIndex: 'tokemName',
+        key: 'tokemName',
+    },
+    {
+        title: 'Amount',
+        dataIndex: 'amount',
+        key: 'amount',
+    },
+    {
+        title: 'Block index',
+        dataIndex: 'blockindex',
+        key: 'blockindex',
     },
   ];

@@ -6,19 +6,21 @@ import * as handleTime from '../../utils/handleTime';
 
 function TxInfo() {
     const location = useLocation();
-    const txNum = location.pathname.split("/").pop();
-    const [tx_info, setTx_info] = useState(0);
-    let scripts = [];
+    const txid = location.pathname.split("/").pop();
+    const [data, setData] = useState();
+    // const [witnesses, setWitnesses] = useState([]);
+    // const [signers, setSigners] = useState([]);
 
     const getData = async () => {
-        const res = await txAPI.getTxInfo(txNum);
-        res.blockHeight = await txAPI.getTxBlockNum(res.blockhash);
-        setTx_info(res);
-        scripts = res.scripts;
+        const res = await txAPI.getTxInfo(txid);
+        setData(res.data);
     };
 
-    const {txid, blocktime, blockHeight, size, version, blockhash,
-         net_fee, sys_fee, type } = tx_info;
+    // const {hash, blocktime, blockHeight, size, blockhash,
+    //     sender, netfee, sysfee, version, nonce} = tx_info;
+
+    // const {txid, blocktime, blockHeight, size, version, blockhash,
+    //      net_fee, sys_fee, type } = tx_info;
     useEffect(() => {
         getData();
     }, []);
@@ -37,9 +39,9 @@ function TxInfo() {
     return (
         <div className="site-card-wrapper">
         <h2>Overveiw</h2>
-        <Descriptions titl="" bordered>
-            <Descriptions.Item label="Tx ID" span={3}>
-                {txid}
+        {/* <Descriptions titl="" bordered>
+            <Descriptions.Item label="Tx hash" span={3}>
+                {hash}
             </Descriptions.Item>
             <Descriptions.Item label="Block Time" span={3}>
                 {blocktime ?  handleTime.Unix_timestamp(blocktime) : "undefined"}
@@ -48,7 +50,7 @@ function TxInfo() {
                 {blockHeight ? blockHeight : "undefined"}
             </Descriptions.Item>
             <Descriptions.Item label="Version" span={3}>
-                {version ? version : "undefined"}
+                {typeof(version) === "number" ? version : "undefined"}
             </Descriptions.Item>
             <Descriptions.Item label="Size" span={3}>
                 {size ? `${size} bytes` : "undefined"}
@@ -56,29 +58,45 @@ function TxInfo() {
             <Descriptions.Item label="Block Hash" span={3}>
                 {blockhash ? blockhash : "undefined"}
             </Descriptions.Item>
-            <Descriptions.Item label="Net Fee" span={3}>
-                {net_fee ? net_fee : "undefined"}
+            <Descriptions.Item label="Sender" span={3}>
+                {sender ? sender : "undefined"}
             </Descriptions.Item>
-            <Descriptions.Item label="Sys Fee" span={3}>
-                {sys_fee ? sys_fee : "undefined"}
+            <Descriptions.Item label="Network Fee" span={3}>
+                {netfee ? netfee : "undefined"}
             </Descriptions.Item>
-            <Descriptions.Item label="Type" span={3}>
-                {type ? type : "undefined"}
+            <Descriptions.Item label="System Fee" span={3}>
+                {sysfee ? sysfee : "undefined"}
+            </Descriptions.Item>
+            <Descriptions.Item label="nonce" span={3}>
+                {nonce ? nonce : "undefined"}
             </Descriptions.Item>
         </Descriptions>
+        <h2>Signers</h2>
+        <Row gutter={16}>
+          <Col span={8}>
+            <Card title="Account" bordered={false}>
+                {signers.length ? (signers[0].account) : "no data"}
+            </Card>
+          </Col>
+          <Col span={8}>
+            <Card title="Scopes" bordered={false}>
+                {signers.length ? (signers[0].scopes) : "no data"}
+            </Card>
+          </Col>
+        </Row>
         <h2>Witness</h2>
         <Row gutter={16}>
           <Col span={8}>
             <Card title="Invocation Script" bordered={false}>
-                {scripts.length ? multiLine(scripts[0].invocation) : "no script"}
+                {witnesses.length ? multiLine(witnesses[0].invocation) : "no script"}
             </Card>
           </Col>
           <Col span={8}>
             <Card title="Verification Script" bordered={false}>
-                {scripts.length ? multiLine(scripts[0].verification) : "no script"}
+                {witnesses.length ? multiLine(witnesses[0].verification) : "no script"}
             </Card>
           </Col>
-        </Row>
+        </Row> */}
       </div>
     )
 }
