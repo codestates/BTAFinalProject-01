@@ -17,7 +17,7 @@ const Create = () => {
 		console.log(myPassword);
 	}, [myPassword]);
 
-  	const [isPasswordSame, setIsPasswordSame] = useState(true);
+  const [isPasswordSame, setIsPasswordSame] = useState(true);
 
 	const handleSubmit = async(event) => {
 		event.preventDefault();

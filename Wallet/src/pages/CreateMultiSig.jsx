@@ -18,7 +18,6 @@ const CreateMultiSig = () => {
 		});
 	}
 	const [num, setNum] = useState(2);
-	const [webHook, setWebHook] = useState("");
 	const [multiSig, setMultiSig] = useState("");
 
 	console.log(11,pubkeyList);
@@ -27,6 +26,11 @@ const CreateMultiSig = () => {
 
 	const onAddDetailDiv = () => {
 		setPubkeyList([...pubkeyList, ""]);
+		setIdList([...idList, ""]);
+	};
+
+	const handleSelect = (event) => {
+		setNum(event.target.value);
 	};
 
 	const onRemoveDetailDiv = () => {
@@ -35,14 +39,12 @@ const CreateMultiSig = () => {
 			pubkeyList2.pop();
 			setPubkeyList([...pubkeyList2]);
 		}
-	};
 
-	const handleSelect = (event) => {
-		setNum(event.target.value);
-	};
-
-	const handleWebHook = (event) => {
-		setWebHook(event.target.value);
+		let idList2 = [...idList];
+		if (idList.length != 2) {
+			idList2.pop();
+			setIdList([...idList2]);
+		}
 	};
 
 	const generateAccount = async (event) => {
@@ -67,7 +69,7 @@ const CreateMultiSig = () => {
 			<Box sx={{ flexGrow: 1, pt: 2}}>
 				{pubkeyList.map((item, i) => (
 					<div key={i}>
-						<label>{`User ${i + 1}`}</label>
+						<label style={{ marginTop: "20px" }}>{`User ${i + 1}`}</label>
 						<div style={{ marginBottom: "20px" }}>
 							<Typography variant="subtitle2">PubKey</Typography>
 							<TextField
@@ -108,10 +110,12 @@ const CreateMultiSig = () => {
 	};
 
 	return (
-		<div>
-			<Box sx={{ flexGrow: 1 }}>
-				<div style={{ marginTop: "10px" }}>
-					{DetailList()}
+		<Box sx={{ flexGrow: 1, p: 3 }}>
+				<Typography variant="button">Here is multisig account</Typography>
+				<br/>
+				<Typography variant="body2" color="primary">{`: ${multiSig}`}</Typography>
+				{DetailList()}
+				<Stack direction="row" justifyContent="center">
 					<Button onClick={onAddDetailDiv}>
 						<AddCircleOutlinedIcon /> 추가
 					</Button>
@@ -120,19 +124,18 @@ const CreateMultiSig = () => {
 					</Button>
 					{SelectNum()}
 					<TextField
-								label={"Discord WebHook Link"}
-								style={{ height: "2%", width: "90%" }}
-								onChange={handleWebHook}
-						/>
+						label={"Discord WebHook Link"}
+						style={{ height: "2%", width: "90%" }}
+						onChange={handleWebHook}
+					/>
 					<div style={{ marginTop: "20px", marginLeft: "10%" }}>
 						<Button variant="contained" onClick={generateAccount}>
 							{"Create multiSig account"}
 						</Button>
 					</div>
 					<div>{`Here is multisig account : ${multiSig.address}`}</div>
-				</div>
-			</Box>
-		</div>
+				</Stack>
+		</Box>
 	);
 };
 

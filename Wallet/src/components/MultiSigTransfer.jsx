@@ -72,7 +72,7 @@ const MultiSigTransfer = () => {
 		<>
 			<Box sx={{ p: 3 }}>
 				<Stack spacing={2} direction="column" justifyContent="center">
-					<Typography variant="h6">Token Transfer</Typography>
+					<Typography variant="h6">MultiSig Transfer</Typography>
 					<Stack direction="column" justifyContent="space-evenly" alignItems="left" spacing={1}>
 						<Typography align="left" variant="h7">
 							보내는 사람
