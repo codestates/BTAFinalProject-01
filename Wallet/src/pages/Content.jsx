@@ -1,5 +1,5 @@
 /*global chrome*/
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Box, AppBar, Toolbar, Button, IconButton, Avatar, Stack, Divider, Modal, Chip } from "@mui/material";
 import { Link } from "react-router-dom";
 import Transaction from "../components/Transaction";
@@ -28,16 +28,23 @@ const Content = () => {
 		setOpen(false);
 	};
 
+	const [userAdd, setUserAdd] = useState();
+	chrome.storage.local.get("address", (res) => {
+		setUserAdd(res.address);
+		console.log(userAdd);
+  });
+
+
 	return (
 		<div>
 			<Box sx={{ flexGrow: 1 }}>
 				<AppBar position="static">
 					<Toolbar variant="dense">
-						<Button color="inherit" size="small">
-							Account Name
-						</Button>
-						<Typography variant="body1" component="div" align="right" sx={{ flexGrow: 1 }}>
-							Address
+					<Typography variant="caption" align="left" sx={{ flexGrow: 1 }}>
+							ADDRESS: 
+						</Typography>
+						<Typography variant="caption" align="right" sx={{ flexGrow: 1 }}>
+							{userAdd}
 						</Typography>
 					</Toolbar>
 				</AppBar>

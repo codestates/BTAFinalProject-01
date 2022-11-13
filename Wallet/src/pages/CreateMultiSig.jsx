@@ -3,12 +3,19 @@ import React from "react";
 import { useState, useEffect } from "react";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import RemoveCircleOutlinedIcon from "@mui/icons-material/RemoveCircleOutlined";
-import { Typography, Box, AppBar, Select, Button, Modal, TextField, MenuItem } from "@mui/material";
-import * as msAPI from "../APIs/multisigAPI";
+import { Typography, Box, Select, Button, Modal, TextField, MenuItem, Stack } from "@mui/material";
+import * as ms from "../APIs/multisigAPI";
 import { Link } from "react-router-dom";
 
-const Test = () => {
-	const myPubKey = "033a4d051b04b7fc0230d2b1aaedfd5a84be279a5361a7358db665ad7857787f1b";
+const CreateMultiSig = () => {
+	// publickey 불러오기
+	const [userPub, setUserPub] = useState();
+	chrome.storage.local.get("publicKey", (res) => {
+		setUserPub(res.publicKey,);
+		console.log(userPub);
+	});
+
+	const myPubKey = userPub;
 	const [pubkeyList, setPubkeyList] = useState([myPubKey, ""]);
 	const [num, setNum] = useState(2);
 	const [webHook, setWebHook] = useState("");
@@ -40,17 +47,19 @@ const Test = () => {
 		const result = msAPI.createMultiSig(num, pubkeyList);
 		console.log(result);
 		setMultiSig(result);
+		chrome.storage.local.set({ multiSig: result.multiSig });
 	};
 
 	const DetailList = () => {
 		return (
-			<div>
+			<Box sx={{ flexGrow: 1, pt: 2}}>
 				{pubkeyList.map((item, i) => (
 					<div key={i}>
 						<label>{`User ${i + 1}`}</label>
 						<div style={{ marginBottom: "20px" }}>
-							<Typography>PubKey</Typography>
+							<Typography variant="subtitle2">PubKey</Typography>
 							<TextField
+								size="small"
 								disabled={i == 0 ? true : false}
 								label={i == 0 ? myPubKey : ""}
 								style={{ height: "2%", width: "90%" }}
@@ -63,13 +72,13 @@ const Test = () => {
 						</div>
 					</div>
 				))}
-			</div>
+			</Box>
 		);
 	};
 
 	const SelectNum = () => {
 		return (
-			<div>
+			<Box sx={{ flexGrow: 1, p: 1 }}>
 				<span style={{ marginRight: "30px" }}>{"Select signing threshold "}</span>
 				<span>
 					<Select
@@ -82,7 +91,7 @@ const Test = () => {
 						{pubkeyList.map((item, i) => (i > 0 ? <MenuItem value={i + 1}>{i + 1}</MenuItem> : <div></div>))}
 					</Select>
 				</span>
-			</div>
+			</Box>
 		);
 	};
 
@@ -115,4 +124,4 @@ const Test = () => {
 	);
 };
 
-export default Test;
+export default CreateMultiSig;
