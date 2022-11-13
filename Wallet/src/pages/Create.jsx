@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { Typography, Avatar, Button, CssBaseline, TextField, Grid, Box, Container, Alert, Stack } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-// import { setPassword } from "../utils/storage.js";
 import * as walletAPI from '../APIs/walletAPI';
 
 const theme = createTheme();

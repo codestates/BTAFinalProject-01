@@ -82,7 +82,6 @@ const Navbar = () => {
 								}}
 								open={Boolean(anchorEl)}
 								onClose={handleClose}>
-								<MenuItem onClick={handleClose}>Profile</MenuItem>
 								<MenuItem onClick={handleClose}>My account</MenuItem>
 								<Divider />
 								<MenuItem>
@@ -91,12 +90,18 @@ const Navbar = () => {
 									</ListItemIcon>
 									New account
 								</MenuItem>
-								<MenuItem>
+								<MenuItem component={Link} to="/createmultisig">
+									<ListItemIcon>
+										<PersonAdd fontSize="small" />
+									</ListItemIcon>
+									New Multisig
+								</MenuItem>
+								{/* <MenuItem>
 									<ListItemIcon>
 										<Settings fontSize="small" />
 									</ListItemIcon>
 									Setting
-								</MenuItem>
+								</MenuItem> */}
 								<MenuItem>
 									<ListItemIcon>
 										<Logout fontSize="small" />

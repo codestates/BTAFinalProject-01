@@ -7,7 +7,7 @@ import Home from "./pages/Home";
 import Content from "./pages/Content";
 import Login from "./pages/Login";
 import Create from "./pages/Create";
-import Test from "./pages/test";
+import CreateMultiSig from "./pages/CreateMultiSig";
 import Account from "./components/Account";
 import TokenList from "./components/TokenList";
 import Setting from "./components/Setting";
@@ -36,7 +36,7 @@ const App = () => {
 			<Route path="/initaccount" element={<InitAccount />} />
 			<Route path="/signtransaction" element={<SignTransaction />} />
 			<Route path="/findmnemonic" element={<FindMnemonic />} />
-			<Route path="/test" element={<Test />} />
+			<Route path="/createmultisig" element={<CreateMultiSig />} />
 		</Routes>
 	);
 };

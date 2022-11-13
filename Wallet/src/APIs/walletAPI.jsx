@@ -47,14 +47,15 @@ export const checkBalance = async (address) => {
 }
 
 
-export const transfer = async (userAccount, toAddress, tokenAmount) => {
+export const transfer = async (userAccount, toAddress, tokenHash, tokenAmount) => {
     const networkMagic = Number(process.env.REACT_APP_NETWORK_MAGIC);
     const systemFee = process.env.REACT_APP_SYSTEM_FEE;
     const networkFee = process.env.REACT_APP_NETWORK_FEE;
     const heightIncrease = Number(process.env.REACT_APP_TRANSFER_HEIGHT_INCREASE);
+        // 추가 될 부분 Select Token : NEO / GAS
 
     const script = sc.createScript({
-        scriptHash: CONST.NATIVE_CONTRACT_HASH.GasToken,
+        scriptHash: tokenHash,
         operation: "transfer",
         args: [
         sc.ContractParam.hash160(userAccount.address),
