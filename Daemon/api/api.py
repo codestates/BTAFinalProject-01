@@ -33,7 +33,8 @@ def info_transaction_list(transaction):
 
 
 def get_db_height():
-    return [x for x in blockchain_db.find().sort("index", -1).limit(1)][0]["index"]
+    x = [x for x in blockchain_db.find().sort("index", -1).limit(1)][0]["index"]
+    return str(x)
 
 
 def get_address_txs(address):
@@ -154,3 +155,10 @@ def getTransferHistoryInfo(address):
     result = trans_db.find_one({"address": address})
     result = jsonify(db2json(result))
     return result
+
+
+@api.route("/version")
+def getVersion():
+
+    height = get_db_height()
+    return height

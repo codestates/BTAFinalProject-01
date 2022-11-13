@@ -2,7 +2,8 @@ import requests
 import os
 from db import db as blockchain_db
 from dotenv import load_dotenv
-load_dotenv()
+# load_dotenv()
+
 
 nodeAPI = os.environ.get('RPC_SERVER')
 appName = os.environ.get('APP')
@@ -56,10 +57,22 @@ def storeBlockInDB(block_index, nodeAPI=False):
 
     success, total_sys, total_net = storeBlockTransactions(block_data)
 
+    # if success:
+    #     lastBlock = blockchain_db['blockchain'].find_one(
+    #         {"index": block_data["index"]-1})
+    #     print(lastBlock)
+    #     return True
+    # return False
+
     if success:
         lastBlock = blockchain_db['blockchain'].find_one(
             {"index": block_data["index"]-1})
         print(lastBlock)
+        if lastBlock and 'sysfee' in lastBlock and 'netfee' in lastBlock:
+            block_data['sysfee'] = lastBlock['sysfee'] + total_sys
+            block_data['netfee'] = lastBlock['netfee'] + total_net
+        blockchain_db['blockchain'].update_one({"index": block_data["index"]}, {
+                                               "$set": block_data}, upsert=True)
         return True
     return False
 

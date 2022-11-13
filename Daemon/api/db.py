@@ -1,12 +1,22 @@
 from pymongo import MongoClient
+from pymongo.errors import ConnectionFailure
 
-MONGOURL = '127.0.0.1:27017'
+
+MONGOURL = '192.168.14.2:27017'
 MONGOAPP = 'neo'
 MONGOURL = "mongodb://{}/{}".format(MONGOURL, MONGOAPP)
 
 client = MongoClient(MONGOURL)
 
 db = client[MONGOAPP]
+
+try:
+    print("#################")
+    print("DB connected")
+except ConnectionFailure:
+    print("#################")
+    print("Server connect fail")
+
 
 transaction_db = db['transactions']
 blockchain_db = db['blockchain']

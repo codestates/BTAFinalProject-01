@@ -4,6 +4,7 @@
 
 * clock.py (Neo Private Network 15초마다 동기화)
 * app.py (Blockchain Rest API )
+* 몽고DB , port : 27017 , RPC_SERVER 부터 Sync된 데이터 저장
 
 ## Requirements
 
@@ -12,9 +13,7 @@
 
 ## 실행
 
-* docker-compose up -d (몽고DB , port : 27017)
-* python api/clock.py  
-* python api/app.py   (port : 5005)
+* docker-compose up -d
 
 
 ## REST API 테스트
