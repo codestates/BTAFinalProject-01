@@ -12,7 +12,7 @@ const heightIncrease = Number(process.env.REACT_APP_TRANSFER_HEIGHT_INCREASE);
 
 export const createMultiSig = (siningNum, pubKeyList) => {
     const multiSig = wallet.Account.createMultiSig(siningNum, pubKeyList);
-    return multiSig.address;
+    return multiSig;
 }
 
 
@@ -25,34 +25,32 @@ const getScriptHashFromAddress = (address) => {
 // tokenHash : CONST.NATIVE_CONTRACT_HASH.NeoToken; //전송할 토큰이 Gas면 CONST.NATIVE_CONTRACT_HASH.GasToken
 // multiSigAccount : privatekey를 포함한 Account class
 
-export const mkMultiSigTx = async(tokenHash, tokenAmount, multiSigAccount, toAddress, privateKey) => {
+export const mkMultiSigTx = async(tokenHash, tokenAmount, multiAcc, toAddress, privateKey) => {
     const script = sc.createScript({
         scriptHash: tokenHash,
         operation: "transfer",
         args: [
-        sc.ContractParam.hash160(multiSigAccount.address),
+        sc.ContractParam.hash160(multiAcc.address),
         sc.ContractParam.hash160(toAddress),
         sc.ContractParam.integer(tokenAmount),
         sc.ContractParam.any(),
         ],
     });
-    
-    const currentHeight = await rpcClient.getBlockCount(multiSigAccount.address);
+    const currentHeight = await rpcClient.getBlockCount();
     
     const newTx = new tx.Transaction({
       signers: [
         {
-          account: getScriptHashFromAddress(),
+          account: multiAcc.scriptHash,
           scopes: tx.WitnessScope.CalledByEntry,
         },
       ],
-      validUntilBlock: currentHeight + heightIncrease,
+      validUntilBlock: currentHeight + 2*heightIncrease,
       systemFee: systemFee,
       networkFee: networkFee,
       script,
     })
     .sign(privateKey, networkMagic, 1024);
-    
     const result = base58.encode(u.hexstring2ab(newTx.serialize()));
     return result;
     // 해당 result값이 메시지에 포함되어 가야함.
@@ -67,10 +65,19 @@ export const signMultiSigTx = (encodedTx, privateKey) => {
     return result;
 }
 
-export const sendMultiSigTx = async(encodedTx) => {
+export const sendMultiSigTx = async(encodedTx, multisigAcct) => {
     const decodedTx = u.ab2hexstring(base58.decode(encodedTx));
     const newTx = tx.Transaction.deserialize(decodedTx);
+    const multisigWitness = tx.Witness.buildMultiSig(
+        newTx.serialize(false),
+        newTx.witnesses,
+        multisigAcct
+    );
+    // Replace the single witnesses with the combined witness.
+    newTx.witnesses = [multisigWitness];
+
     const result = await rpcClient.sendRawTransaction(newTx);
+    console.log(result);
     return result;
 }
 

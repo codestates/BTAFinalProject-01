@@ -5,23 +5,25 @@ import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import RemoveCircleOutlinedIcon from "@mui/icons-material/RemoveCircleOutlined";
 import { Typography, Box, Select, Button, Modal, TextField, MenuItem, Stack } from "@mui/material";
 import * as msAPI from "../APIs/multisigAPI";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const CreateMultiSig = () => {
+	const navigate = useNavigate();
 	// publickey 불러오기
-	const [userPub, setUserPub] = useState();
-	chrome.storage.local.get("publicKey", (res) => {
-		setUserPub(res.publicKey,);
-		console.log(userPub);
-	});
-
-	const myPubKey = userPub;
-	const [pubkeyList, setPubkeyList] = useState([myPubKey, ""]);
+	const [pubkeyList, setPubkeyList] = useState(["", ""]);
+	const getData = () => {
+		chrome.storage.local.get("publicKey", (res) => {
+			setPubkeyList([res.publicKey,""]);
+		});
+	}
 	const [num, setNum] = useState(2);
 	const [webHook, setWebHook] = useState("");
 	const [multiSig, setMultiSig] = useState("");
 
-	useEffect(() => {}, [multiSig]);
+	console.log(11,pubkeyList);
+
+	useEffect(() => {getData()}, [multiSig]);
 
 	const onAddDetailDiv = () => {
 		setPubkeyList([...pubkeyList, ""]);
@@ -44,15 +46,20 @@ const CreateMultiSig = () => {
 	};
 
 	const generateAccount = async (event) => {
+		console.log(num,pubkeyList);
 		const result = msAPI.createMultiSig(num, pubkeyList);
 		console.log(result);
 		setMultiSig(result);
-		chrome.storage.local.set({ multiSig: result });
+		chrome.storage.local.set({ multiAdd: result.address });
+		chrome.storage.local.set({ multiHash: result.scriptHash });
 		chrome.storage.local.set({ webHook: webHook });
-		const msg = `${pubkeyList} 을 이용하여 새로운 멀티시그 address가 만들어졌습니다! \n
-		생성된 multisig address: ${multiSig} \n
+		chrome.storage.local.set({ multiJson: result.export()});
+		const msg = `${pubkeyList}을 이용하여 새로운 멀티시그 address가 만들어졌습니다! \n
+		생성된 multisig address: ${result.address} \n
 		(${num}/${pubkeyList.length})의 서명이 있어야 트랜잭션이 발생합니다. \n`
-		await msAPI.sendMSG( webHook, msg).then((res) => {console.log(res);})
+		await msAPI.sendMSG( webHook, msg).then((res) => {console.log(res);});
+		alert('multiSig address 생성');
+		navigate("/content");
 	};
 
 	const DetailList = () => {
@@ -66,7 +73,7 @@ const CreateMultiSig = () => {
 							<TextField
 								size="small"
 								disabled={i == 0 ? true : false}
-								label={i == 0 ? myPubKey : ""}
+								label={i == 0 ? pubkeyList[0] : ""}
 								style={{ height: "2%", width: "90%" }}
 								onChange={(e) => {
 									let pubkeys = [...pubkeyList];
@@ -122,7 +129,7 @@ const CreateMultiSig = () => {
 							{"Create multiSig account"}
 						</Button>
 					</div>
-					<div>{`Here is multisig account : ${multiSig}`}</div>
+					<div>{`Here is multisig account : ${multiSig.address}`}</div>
 				</div>
 			</Box>
 		</div>

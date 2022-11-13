@@ -10,24 +10,37 @@ const MultiSigTransfer = () => {
 	const [multiAcc, setMultiAcc] = useState("");
 	const [webHook, setWebHook] = useState("");
 	// 웹에서 볼 때 주석 처리 !!
-	chrome.storage.local.get("multiSig", (res) => {
-		setMultiAcc(res.multiSig);
-	});
-
-	chrome.storage.local.get(["address", "privateKey"], (res) => {
-		setUserAcc({
-			address: res.address,
-			privateKey: res.privateKey,
+	const getData = () => {
+		chrome.storage.local.get(["multiAdd", "multiHash"], (res) => {
+			console.log(res.multiAdd,res.multiHash);
+			setMultiAcc({
+				address: res.multiAdd,
+				scriptHash: res.multiHash,
+			});
 		});
-	});
+	
+		chrome.storage.local.get(["address", "privateKey"], (res) => {
+			setUserAcc({
+				address: res.address,
+				privateKey: res.privateKey,
+			});
+		});
+	
+		chrome.storage.local.get("webHook", (res) => {
+			setWebHook(res.webHook);
+		});
+		console.log(userAcc,multiAcc,webHook);
+	};
+	console.log(userAcc,multiAcc,webHook);
 
-	chrome.storage.local.get("webHook", (res) => {
-		setWebHook(res.webHook);
-	});
+	useEffect(() => {getData();},[]);
 
 	const [ToAddress, setToAddress] = useState(""); // 받는 사람 주소
   	const [amount, setAmount] = useState(""); // 전송할 토큰 양
 	const [token, setToken] = useState(""); // 전송할 토큰 선택
+	const userAccount = userAcc;
+	const multiAccount = multiAcc;
+
 	const handleTo = (e) => { setToAddress(e.target.value); };
   	const handleAmount = (e) => { setAmount(e.target.value); };
 	const handleChange = (event) => {
@@ -39,9 +52,10 @@ const MultiSigTransfer = () => {
 		const toAddress = ToAddress;
 		const tokenAmount = amount;
 		const tokenHash = token;
-		const encodedTx = await msAPI.mkMultiSigTx(tokenHash, tokenAmount, multiAcc, toAddress, userAcc.privateKey);
+		console.log(1,tokenHash, tokenAmount, multiAccount, toAddress, userAccount.privateKey);
+		const encodedTx = await msAPI.mkMultiSigTx(tokenHash, tokenAmount, multiAccount, toAddress, userAccount.privateKey);
 		console.log(encodedTx);
-		const msg = `${userAcc.address} 계정의 주인이 새로운 Tx를 생성했습니다. \n
+		const msg = `${userAccount.address} 계정의 주인이 새로운 Tx를 생성했습니다. \n
 		내용 : ${toAddress}에게 ${tokenAmount} 토큰을 전송 (토큰 해시:${tokenHash}) \n
 		서명 하시려면 지갑에서 "Get MultiSig TX" 버튼을 누르고 아래의 값을 입력하세요. \n
 		encoded Tx:${encodedTx}\n
