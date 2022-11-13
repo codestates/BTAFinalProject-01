@@ -5,40 +5,10 @@ import { Layout } from 'antd';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import { theme } from './style/theme';
-import Neon, { wallet, rpc } from "@cityofzion/neon-js";
+// import Neon, { wallet, rpc } from "@cityofzion/neon-js";
 
-const url = process.env.REACT_APP_PRIVATE_RPC_URL;
-const rpcClient = Neon.create.rpcClient(url);
-// const rpcClient = new rpc.RPCClient(url);
-
-// const getBlock = async () => {
-// 	return await rpcClient.getBlock(3).then(async (res) => {console.log(res)});
-// }
-// getBlock();
-
-// const test = async () => {
-// 	return await rpcClient.getBlockHash(2).then(async (res) => {console.log(res)});
-// }
-// test();
-
-// const test2 = async () => {
-//   return await rpcClient.getConnectionCount(4).then(async (res) => {console.log(res)});
-// }
-// test2();
-
-// let query = Neon.create.query({ 
-//   "jsonrpc": "2.0",
-//   "method": "getblock",
-//   "params": [5, true],
-//   "id": 1
-// });
-
-
-// const test3 = async () => {
-//   return await rpcClient.execute(query).then(async (res) => {console.log(res)});
-// }
-// test3();
-
+// const url = process.env.REACT_APP_PRIVATE_RPC_URL;
+// const rpcClient = Neon.create.rpcClient(url);
 
 const { Content } = Layout;
 
