@@ -1,6 +1,9 @@
-import { wallet } from "@cityofzion/neon-core";
 import { CONST, rpc, sc, wallet, tx, u } from "@cityofzion/neon-core";
+import axios from "axios";
 import base58 from "bs58";
+
+const url = process.env.REACT_APP_PRIVATE_RPC_URL;
+const rpcClient = new rpc.RPCClient(url);
 
 const networkMagic = Number(process.env.REACT_APP_NETWORK_MAGIC);
 const systemFee = process.env.REACT_APP_SYSTEM_FEE;
@@ -71,3 +74,11 @@ export const sendMultiSigTx = async(encodedTx) => {
     return result;
 }
 
+export const notifyTransfer = async (content) => {
+    let res = await axios.post({
+        url : process.env.REACT_APP_TRANSFER_WEBHOOK_URL,
+        data : {content: content}
+    }   
+    );
+    return res;
+}
