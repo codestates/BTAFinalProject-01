@@ -1,12 +1,12 @@
 import requests
 import os
 from db import db as blockchain_db
+from dotenv import load_dotenv
+load_dotenv()
 
-
-nodeAPI = os.environ.get('NODEAPI', 'http://127.0.0.0:30333')
-
-appName = os.environ.get('neo')
-net = os.environ.get('NET', 'PrivNet')
+nodeAPI = os.environ.get('RPC_SERVER')
+appName = os.environ.get('APP')
+net = os.environ.get('NET')
 
 # 트랜잭션해시 자리수 보정
 
