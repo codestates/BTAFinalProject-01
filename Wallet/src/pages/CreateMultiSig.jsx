@@ -72,16 +72,6 @@ const CreateMultiSig = () => {
 									setPubkeyList([...pubkeys]);
 								}}
 							/>
-							<Typography variant="subtitle2">Slack ID</Typography>
-							<TextField
-								size="small"
-								style={{ height: "2%", width: "90%" }}
-								onChange={(e) => {
-									let id = [...idList];
-									id[i] = e.target.value;
-									setIdList([...id]);
-								}}
-							/>
 						</div>
 					</div>
 				))}
