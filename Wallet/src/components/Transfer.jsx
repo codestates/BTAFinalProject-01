@@ -8,7 +8,7 @@ import { CONST } from "@cityofzion/neon-js";
 const Transfer = () => {
 	const [userAcc, setUserAcc] = useState();
 	const [fromAddress, setFromAddress] = useState("");
-	// console.log(CONST.NATIVE_CONTRACT_HASH.NeoToken);
+	
 	// 웹에서 볼 때 주석 처리 !!
   chrome.storage.local.get(["address", "privateKey", "publicKey", "scriptHash" ], (res) => {
     setUserAcc({
@@ -38,17 +38,11 @@ const Transfer = () => {
 		const toAddress = ToAddress;
 		const tokenAmount = amount;
 		const tokenHash = token;
-		
-		// 토큰 셀렉트 -> Neo, Gas -> Tokenhash
+
 		// result hash값 저장 -> transaction list up
-		// const result = await walletAPI.transfer(userAccount, toAddress, tokenHash, tokenAmount);
-		const result = (userAccount, toAddress, tokenHash, tokenAmount);
+		const result = await walletAPI.transfer(userAccount, toAddress, tokenHash, tokenAmount);
 		console.log(result);
 		chrome.storage.local.set({ transfer: result });
-		// chrome.storage.local.get("transfer", (result) => {
-		// 	updateTransfer(result);
-		// });
-		// updateTransfer(result);
 		alert('success transfer: ' + result);
 	};
 
