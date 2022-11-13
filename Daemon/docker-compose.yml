@@ -6,3 +6,28 @@ services:
       - MONGODB_APPLICATION_DATABASE=neo
     ports:
      - "27017:27017"
+    networks:
+      client1:
+        ipv4_address: 192.168.14.2
+  api:
+    image: neo-api
+    environment:
+      - RPC_SERVER=http://127.0.0.1:40333 #RPC_SERVER
+    build:
+      context: .          
+    command: /bin/sh -c "python worker.py"
+    ports:
+      - "5005:5005"        
+    networks:
+      client1:
+        ipv4_address: 192.168.14.3
+    stdin_open: true
+    tty: true    
+
+networks:
+  client1:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.14.0/24
