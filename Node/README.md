@@ -20,26 +20,26 @@ docker-compose up
 ```
 
 ## JSON-RPC 테스트
-* `neo-client1` 노드 가장 높은 블록 조회:
+* `neo-client1`  블록 높이 조회:
 
 ```
 curl http://127.0.0.1:10332 -d '{"jsonrpc":"2.0","method":"getblockcount","params":[],"id":1}'
 ```
 
-*  `neo-consensus` 노드  지갑 주소 호출:
+*  `neo-consensus` openwallet 지갑 리스트:
 
 ```
 curl http://127.0.0.1:40332 -d '{"jsonrpc":"2.0","method":"listaddress","params":[],"id":1}'
 ```
 
-* `neo-consensus` 노드 `NKvR5WeczCQMcVWQD9aaMqegfEoCBXGWpW` 계정의 모든 NEP-17 잔고 조회
+* `neo-consensus` 노드 `NKvR5WeczCQMcVWQD9aaMqegfEoCBXGWpW` NEP-17 잔고 조회
 
 ```
 curl http://127.0.0.1:40332 -d '{"jsonrpc":"2.0","method":"getnep17balances","params":["NKvR5WeczCQMcVWQD9aaMqegfEoCBXGWpW"],"id":1}'
 ```
 
 ## INFO
-도커파일은 아래 3개의 노드(Consensus,Client1,Client2)로 구성됨
+3개의 노드(Consensus,Client1,Client2)로 구성됨
 
 * **Consensus**
   * Address: `NM7Aky765FG8NhhwtxjXRx7jEL1cnw7PBP`
@@ -62,10 +62,7 @@ curl http://127.0.0.1:40332 -d '{"jsonrpc":"2.0","method":"getnep17balances","pa
     * WIF: `L1RgqMJEBjdXcuYCMYB6m7viQ9zjkNPjZPAKhhBoXxEsygNXENBb`
   * JSON-RPC: `localhost:20332`
 
-* **Wallet passphrase**: `neo`
+* ** 지갑비밀번호: `neo`
 
 # 참조 (아래)
 AxLabs/neo3-privatenet-docker
-
-
-

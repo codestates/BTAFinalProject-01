@@ -8,6 +8,8 @@ nodeAPI = os.environ.get('NODEAPI', 'http://127.0.0.0:30333')
 appName = os.environ.get('neo')
 net = os.environ.get('NET', 'PrivNet')
 
+# 트랜잭션해시 자리수 보정
+
 
 def convert_txid(txid):
     if len(txid) == 66:
@@ -58,17 +60,12 @@ def storeBlockInDB(block_index, nodeAPI=False):
         lastBlock = blockchain_db['blockchain'].find_one(
             {"index": block_data["index"]-1})
         print(lastBlock)
-        # if lastBlock and 'sysfee' in lastBlock and 'netfee' in lastBlock:
-        #     block_data['sysfee'] = lastBlock['sysfee'] + total_sys
-        #     block_data['netfee'] = lastBlock['netfee'] + total_net
-        # blockchain_db['blockchain'].update_one({"index": block_data["index"]}, {
-        #                                        "$set": block_data}, upsert=True)
         return True
     return False
 
 
 # 블록에 있는 모든 트랜잭션을 저장
-# 트랜잭션이 이미 있는 경우 업데이트
+# 트랜잭션 및 지갑주소 업데이트
 def storeBlockTransactions(block):
     transactions = block['tx']
     out = []
@@ -82,6 +79,7 @@ def storeBlockTransactions(block):
         total_sys += t['sysfee']
         total_net += t['netfee']
 
+        # 동기화시 보낸사람의 지갑과 보낸 이력을 업데이트함
         balance = rpcRequest("getnep17balances", [t['sender']], nodeAPI)
         transfer = rpcRequest("getnep17transfers", [t['sender']], nodeAPI)
 
