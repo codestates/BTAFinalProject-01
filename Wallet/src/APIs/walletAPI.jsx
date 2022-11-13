@@ -2,39 +2,58 @@ import Neon, { sc, tx, wallet, CONST } from "@cityofzion/neon-js";
 import Axios from "axios";
 
 const ethers = require('ethers');
+var CryptoJS = require("crypto-js");
 
 const url = process.env.REACT_APP_PRIVATE_RPC_URL;
 const rpcClient = Neon.create.rpcClient(url);
 
 
-export const createWallet = async (password) => {
-
-    const mnemonicCode = ethers.utils.entropyToMnemonic(ethers.utils.randomBytes(16));
-    const mnemonicWallet = ethers.utils.HDNode.fromMnemonic(mnemonicCode, password);
-    const privateKey = mnemonicWallet.privateKey.substring(2);
-    const userAccount = new wallet.Account(privateKey);
-    const nep2Key = await wallet.encrypt(userAccount.WIF, password);
-    console.log(userAccount);
-    // const userWallet = Neon.create.wallet();
-    // const userAccount = new wallet.Account(privateKey);
-    // userWallet.addAccount(userAccount);
-
-    return {'nep2Key': nep2Key,
-            'address': userAccount.label,
-            'mnemonic': mnemonicCode,
-            'WIF': userAccount.WIF,
-            'privateKey': privateKey,
-            'publicKey': userAccount.publicKey,
-            'scriptHash': userAccount.scriptHash
-            };
+export const decryptValue = async (encryptedValue, password) => {
+    const decryptedValue = await CryptoJS.AES.decrypt(encryptedValue, password);
+    return decryptedValue.toString(CryptoJS.enc.Utf8);
 }
 
+// Get privateKey from mnemonic
+export const getPrivateKeyFromMnemonic = (mnemonicCode) => {
+    const mnemonicWallet = ethers.utils.HDNode.fromMnemonic(mnemonicCode);
+    console.log(mnemonicWallet.privateKey);
+    const privateKey = mnemonicWallet.privateKey.substring(2);
+    return privateKey;
+}
 
-// export const checkBalance = async (nep2Key) => {
-//     const res = await rpcClient.getNep17Balances(nep2Key);
-//     console.log(2, res);
-//     return res;
-// }
+export const restoreAccount = async(encryptedAccount, mnemonicCode, newPassword) => {
+    const privateKey = getPrivateKeyFromMnemonic(mnemonicCode);
+    return {
+        "address": encryptedAccount.address,
+        "publicKey": encryptedAccount.publicKey,
+        "privateKey": await CryptoJS.AES.encrypt(privateKey, newPassword),
+        "scriptHash": encryptedAccount.scriptHash
+    };
+}
+
+export const Login = async(encryptedAccount, password) => {
+    return {
+        "address": encryptedAccount.address,
+        "publicKey": encryptedAccount.publicKey,
+        "privateKey": await decryptValue(encryptedAccount.privateKey, password),
+        "scriptHash": encryptedAccount.scriptHash
+    }
+}
+
+export const createWallet = async (password) => {
+    const mnemonicCode = ethers.utils.entropyToMnemonic(ethers.utils.randomBytes(16));
+    const privateKey = getPrivateKeyFromMnemonic(mnemonicCode);
+    console.log(privateKey);
+    const userAccount = new wallet.Account(privateKey);
+    console.log(userAccount);
+    return {
+        "address": userAccount.address,
+        "publicKey": userAccount.publicKey,
+        "privateKey": await CryptoJS.AES.encrypt(privateKey, password),
+        "scriptHash": userAccount.scriptHash,
+        "mnemonic": mnemonicCode
+    };
+}
 
 export const checkBalance = async (address) => {
     let res = await Axios.post(url, {
