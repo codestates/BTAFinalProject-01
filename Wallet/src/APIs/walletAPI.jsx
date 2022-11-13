@@ -7,19 +7,21 @@ var CryptoJS = require("crypto-js");
 const url = process.env.REACT_APP_PRIVATE_RPC_URL;
 const rpcClient = Neon.create.rpcClient(url);
 
-
+// This function is to decrypt encrypted value
 export const decryptValue = async (encryptedValue, password) => {
     const decryptedValue = await CryptoJS.AES.decrypt(encryptedValue, password);
     return decryptedValue.toString(CryptoJS.enc.Utf8);
 }
 
-// Get privateKey from mnemonic
+// Get privateKey using mnemonic
 export const getPrivateKeyFromMnemonic = (mnemonicCode) => {
     const mnemonicWallet = ethers.utils.HDNode.fromMnemonic(mnemonicCode);
     const privateKey = mnemonicWallet.privateKey.substring(2);
     return privateKey;
 }
 
+// 1. Get private key using mnemonic code
+// 2. Encrypt the private key using a new password
 export const restoreAccount = async(encryptedAccount, mnemonicCode, newPassword) => {
     const privateKey = getPrivateKeyFromMnemonic(mnemonicCode);
     return {
@@ -30,6 +32,7 @@ export const restoreAccount = async(encryptedAccount, mnemonicCode, newPassword)
     };
 }
 
+// Decrypt the encrypted private key using password
 export const Login = async(encryptedAccount, password) => {
     return {
         "address": encryptedAccount.address,
@@ -39,6 +42,10 @@ export const Login = async(encryptedAccount, password) => {
     }
 }
 
+// 1. Generate mnemonic code.
+// 2. Get private key using the mnemonic key.
+//    This is deterministic; you will always get the same private key with the same mnemonic code. 
+// 3. Encrypt the private key.
 export const createWallet = async (password) => {
     const mnemonicCode = ethers.utils.entropyToMnemonic(ethers.utils.randomBytes(16));
     const privateKey = getPrivateKeyFromMnemonic(mnemonicCode);
@@ -52,6 +59,7 @@ export const createWallet = async (password) => {
     };
 }
 
+// RPC POST request to check balance of the given address
 export const checkBalance = async (address) => {
     let res = await Axios.post(url, {
       jsonrpc: "2.0",
@@ -62,7 +70,7 @@ export const checkBalance = async (address) => {
     return res
 }
 
-
+// userAccount must be decrypted before transfering token to another address.
 export const transfer = async (userAccount, toAddress, tokenAmount) => {
     const networkMagic = Number(process.env.REACT_APP_NETWORK_MAGIC);
     const systemFee = process.env.REACT_APP_SYSTEM_FEE;
