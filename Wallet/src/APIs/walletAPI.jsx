@@ -16,7 +16,6 @@ export const decryptValue = async (encryptedValue, password) => {
 // Get privateKey from mnemonic
 export const getPrivateKeyFromMnemonic = (mnemonicCode) => {
     const mnemonicWallet = ethers.utils.HDNode.fromMnemonic(mnemonicCode);
-    console.log(mnemonicWallet.privateKey);
     const privateKey = mnemonicWallet.privateKey.substring(2);
     return privateKey;
 }
@@ -43,9 +42,7 @@ export const Login = async(encryptedAccount, password) => {
 export const createWallet = async (password) => {
     const mnemonicCode = ethers.utils.entropyToMnemonic(ethers.utils.randomBytes(16));
     const privateKey = getPrivateKeyFromMnemonic(mnemonicCode);
-    console.log(privateKey);
     const userAccount = new wallet.Account(privateKey);
-    console.log(userAccount);
     return {
         "address": userAccount.address,
         "publicKey": userAccount.publicKey,
