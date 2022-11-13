@@ -23,6 +23,14 @@ const InitAccount = () => {
     navigate("/");
 	};
 
+	const handleTransfer = () => {
+		alert("해당 Tx을 전송합니다.");
+	};
+
+	const goHome = () => {
+		navigate("/");
+	};
+
 	return (
 		<Box sx={{ p: 3 }}>
 			<Stack spacing={3} direction="column" justifyContent="center">
@@ -43,9 +51,14 @@ const InitAccount = () => {
 					</div>
 					
 				</Stack>
-
 				<Button variant="contained" onClick={handleSign} sx={{ m: "1" }}>
 					사인하기
+				</Button>
+				<Button variant="contained" onClick={handleTransfer} sx={{ m: "1" }}>
+					전송하기
+				</Button>
+				<Button variant="contained" onClick={goHome} sx={{ m: "1" }}>
+					뒤로가기
 				</Button>
 			</Stack>
 		</Box>

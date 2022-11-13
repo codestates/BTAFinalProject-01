@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import RemoveCircleOutlinedIcon from "@mui/icons-material/RemoveCircleOutlined";
 import { Typography, Box, AppBar, Select, Button, Modal, TextField, MenuItem } from "@mui/material";
-import * as ms from "../APIs/MultiSigAcc";
+import * as msAPI from "../APIs/multisigAPI";
 import { Link } from "react-router-dom";
 
 const Test = () => {
@@ -40,7 +40,7 @@ const Test = () => {
 	};
 
 	const generateAccount = (event) => {
-		const result = ms.createMultiSig(num, pubkeyList);
+		const result = msAPI.createMultiSig(num, pubkeyList);
 		console.log(result);
 		setMultiSig(result);
 	};
