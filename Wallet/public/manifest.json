@@ -8,6 +8,12 @@
     "48": "neologo.png",
     "128": "neologo.png"
   },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "storage"
+  ],
   "action": {
     "default_icon": {
       "16": "neologo.png",
@@ -16,6 +22,5 @@
     },
     "default_popup": "index.html",
     "default_title": "Neo Wallet Extension"
-  },
-  "permissions": ["storage"]
+  }
 }

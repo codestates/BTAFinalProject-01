@@ -2,36 +2,24 @@
 import React from "react";
 import { Typography, Box, Stack, TextField, FormControl, InputLabel, Select, MenuItem, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import * as walletAPI from '../APIs/walletAPI';
 
-const Transfer = () => {
+const MultiSigTransfer = () => {
 	const [token, setToken] = React.useState("");
-	
-	const handleChange = async(event) => {
+
+	const handleChange = (event) => {
 		setToken(event.target.value);
-		console.log(token);
-		const userAccount = {
-			address: "NX3TCZ28zTppd53or2wQBjC5xXAXDyeLGP",
-			privateKey: "d3f757bf350b9e79197e739971d97fbacdc181abd3a6bb66c0d2ac85bd5b3fcb",
-			publicKey: "02144d47c73c2e74bf5cb427b3a526845143cb7e1727c1d397fdd3451728d9223b",
-			scriptHash: "753d85c69d9f6653d40af66e6637928a17ae137a"
-		}
-		const toAddress = 'NTcWc839XGP39YrCrWkZseXNtBCGGxrzkQ';
-		const tokenAmount = 5;
-		const result = await walletAPI.transfer(userAccount, toAddress, tokenAmount);
-		console.log(result);
 	};
 
 	return (
 		<>
 			<Box sx={{ p: 3 }}>
 				<Stack spacing={2} direction="column" justifyContent="center">
-					<Typography variant="h6">Token Transfer</Typography>
+					<Typography variant="h6">MultiSig Transfer</Typography>
 					<Stack direction="column" justifyContent="space-evenly" alignItems="left" spacing={1}>
 						<Typography align="left" variant="h7">
 							보내는 사람
 						</Typography>
-						{/* 내 어카운트의 address default로 넣기 */}
+						{/* 내 어카운트의 multisig address default로 넣기 */}
 						<TextField id="FromAddress" defaultValue="my address" label="From Address" variant="outlined" size="small" />
 					</Stack>
 					<Stack direction="column" justifyContent="space-between" alignItems="left" spacing={1}>
@@ -70,4 +58,4 @@ const Transfer = () => {
 	);
 };
 
-export default Transfer;
+export default MultiSigTransfer;

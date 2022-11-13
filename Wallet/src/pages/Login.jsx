@@ -1,18 +1,38 @@
+/*global chrome*/
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { Typography, Avatar, Button, CssBaseline, TextField, FormControl, FormControlLabel, Checkbox, Link, Grid, Box, Container } from "@mui/material";
+import { Typography, Avatar, Button, CssBaseline, TextField, Grid, Box, Container } from "@mui/material";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from "react-router-dom";
+import { wallet } from "@cityofzion/neon-js";
 
 const theme = createTheme();
 
 const Login = () => {
-  const handleLogin = (event) => {
+  const navigate = useNavigate();
+  const [savedNep2, setSavedNep2] = useState();
+  const [savedWIF, setSavedWIF] = useState();
+
+  // 웹에서 볼 때 주석 처리 !!
+  // chrome.storage.local.get(["nep2Key", "WIF" ], (res) => {
+  //   setSavedNep2(res.nep2Key);
+  //   setSavedWIF(res.WIF);
+  //   console.log(savedNep2);
+  //   console.log(savedWIF);
+  // });
+  
+  const handleLogin = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      password: data.get('password')
-    });
+    const pw = data.get('password');
+    console.log(pw);
+    
+    const decryptedKey = await wallet.decrypt(savedNep2, pw);
+    if (decryptedKey == savedWIF) {
+      alert('로그인 성공')
+      navigate("/content");
+    }
   };
 
   return (
