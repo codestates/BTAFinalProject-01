@@ -3,25 +3,23 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Box, Stack, TextField, FormControl, InputLabel, Select, MenuItem, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import * as walletAPI from '../APIs/walletAPI';
-import { CONST } from "@cityofzion/neon-js";
+import { CONST, wallet } from "@cityofzion/neon-js";
 
 const Transfer = () => {
 	const [userAcc, setUserAcc] = useState();
 	const [fromAddress, setFromAddress] = useState("");
 	
 	// 웹에서 볼 때 주석 처리 !!
-  chrome.storage.local.get(["address", "privateKey", "publicKey", "scriptHash" ], (res) => {
-    setUserAcc({
-			address: res.address,
-			privateKey: res.privateKey,
-			publicKey: res.publicKey,
-			scriptHash: res.scriptHash,
-		});
-		// console.log(userAcc);
-  });
-	chrome.storage.local.get("address", (res) => {
+  chrome.storage.local.get("decryptedAcc", (res) => {
+    setUserAcc(res.decryptedAcc);
 		setFromAddress(res.address);
+		// console.log(0, res);
+		// console.log(1, userAcc);
   });
+
+	// chrome.storage.local.get("address", (res) => {
+	// 	setFromAddress(res.address);
+  // });
 
 	const [ToAddress, setToAddress] = useState(""); // 받는 사람 주소
   const [amount, setAmount] = useState(""); // 전송할 토큰 양
@@ -34,14 +32,17 @@ const Transfer = () => {
 	};
 
 	const handleClick = async(event) => {
-		const userAccount = userAcc;
+		// const userAccount = userAcc;
+		console.log(2, userAcc)
+		// const userAccount = new wallet.Account(userAcc);
 		const toAddress = ToAddress;
 		const tokenAmount = amount;
 		const tokenHash = token;
+		// console.log(7, userAccount);
 
 		// result hash값 저장 -> transaction list up
-		const result = await walletAPI.transfer(userAccount, toAddress, tokenHash, tokenAmount);
-		console.log(result);
+		const result = await walletAPI.transfer(userAcc, toAddress, tokenHash, tokenAmount);
+		console.log(3, result);
 		chrome.storage.local.set({ transfer: result });
 		alert('success transfer: ' + result);
 	};
