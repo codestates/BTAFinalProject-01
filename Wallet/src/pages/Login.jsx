@@ -13,14 +13,18 @@ const Login = () => {
   const navigate = useNavigate();
   const [savedNep2, setSavedNep2] = useState();
   const [savedWIF, setSavedWIF] = useState();
-
+  const [isLogin, setIsLogin] = useState(false);
+  useEffect(() => {
+		chrome.storage.local.set({ login: true });
+	}, [isLogin]);
+	
   // 웹에서 볼 때 주석 처리 !!
-  // chrome.storage.local.get(["nep2Key", "WIF" ], (res) => {
-  //   setSavedNep2(res.nep2Key);
-  //   setSavedWIF(res.WIF);
-  //   console.log(savedNep2);
-  //   console.log(savedWIF);
-  // });
+  chrome.storage.local.get(["nep2Key", "WIF" ], (res) => {
+    setSavedNep2(res.nep2Key);
+    setSavedWIF(res.WIF);
+    console.log(savedNep2);
+    console.log(savedWIF);
+  });
   
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -30,10 +34,12 @@ const Login = () => {
     
     const decryptedKey = await wallet.decrypt(savedNep2, pw);
     if (decryptedKey == savedWIF) {
+      setIsLogin(true);
       alert('로그인 성공')
       navigate("/content");
     }
   };
+
 
   return (
       <ThemeProvider theme={theme}>

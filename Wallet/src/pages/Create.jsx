@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { Typography, Avatar, Button, CssBaseline, TextField, Grid, Box, Container, Alert, Stack } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-// import { setPassword } from "../utils/storage.js";
 import * as walletAPI from '../APIs/walletAPI';
 
 const theme = createTheme();
@@ -18,7 +17,7 @@ const Create = () => {
 		console.log(myPassword);
 	}, [myPassword]);
 
-  	const [isPasswordSame, setIsPasswordSame] = useState(true);
+  const [isPasswordSame, setIsPasswordSame] = useState(true);
 
 	const handleSubmit = async(event) => {
 		event.preventDefault();
@@ -34,14 +33,15 @@ const Create = () => {
 			console.log(createRes.nep2Key);
 			const balanceRes = await walletAPI.checkBalance(createRes.address);
 			console.log(balanceRes);
-
+			
 			// 웹에서 볼 때 주석 처리 !!
-			// chrome.storage.local.set({ nep2Key: createRes.nep2Key });
-			// chrome.storage.local.set({ address: createRes.address });
-			// chrome.storage.local.set({ mnemonic: createRes.mnemonic });
-			// chrome.storage.local.set({ publicKey: createRes.publicKey });
-			// chrome.storage.local.set({ privateKey: createRes.privateKey });
-			// chrome.storage.local.set({ WIF: createRes.WIF });
+			chrome.storage.local.set({ nep2Key: createRes.nep2Key });
+			chrome.storage.local.set({ address: createRes.address });
+			chrome.storage.local.set({ mnemonic: createRes.mnemonic });
+			chrome.storage.local.set({ publicKey: createRes.publicKey });
+			chrome.storage.local.set({ privateKey: createRes.privateKey });
+			chrome.storage.local.set({ WIF: createRes.WIF });
+			chrome.storage.local.set({ scriptHash: createRes.scriptHash });
 			
 			navigate(`/showmnemonic`);
 		} else {
