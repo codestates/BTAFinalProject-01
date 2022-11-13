@@ -7,12 +7,14 @@ var CryptoJS = require("crypto-js");
 const url = process.env.REACT_APP_PRIVATE_RPC_URL;
 const rpcClient = Neon.create.rpcClient(url);
 
+
+// This function is to decrypt encrypted value
 export const decryptValue = async (encryptedValue, password) => {
 	const decryptedValue = await CryptoJS.AES.decrypt(encryptedValue, password);
 	return decryptedValue.toString(CryptoJS.enc.Utf8);
 };
 
-// Get privateKey from mnemonic
+// Get privateKey using mnemonic
 export const getPrivateKeyFromMnemonic = (mnemonicCode) => {
 	const mnemonicWallet = ethers.utils.HDNode.fromMnemonic(mnemonicCode);
 	const privateKey = mnemonicWallet.privateKey.substring(2);
@@ -38,6 +40,11 @@ export const Login = async (encryptedAccount, password) => {
 	};
 };
 
+
+// 1. Generate mnemonic code.
+// 2. Get private key using the mnemonic key.
+//    This is deterministic; you will always get the same private key with the same mnemonic code. 
+// 3. Encrypt the private key.
 export const createWallet = async (password) => {
 	const mnemonicCode = ethers.utils.entropyToMnemonic(ethers.utils.randomBytes(16));
 	const privateKey = getPrivateKeyFromMnemonic(mnemonicCode);
@@ -53,6 +60,7 @@ export const createWallet = async (password) => {
 	];
 };
 
+// RPC POST request to check balance of the given address
 export const checkBalance = async (address) => {
 	let res = await Axios.post(url, {
 		jsonrpc: "2.0",
@@ -108,3 +116,4 @@ export const transfer = async (userAccount, toAddress, tokenHash, tokenAmount) =
 
 	return true;
 };
+
