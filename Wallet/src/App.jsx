@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import * as ReactDOM from "react-dom";
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import { Route, Routes, Link } from "react-router-dom";
+
 import Home from "./pages/Home";
 import Content from "./pages/Content";
 import Login from "./pages/Login";
@@ -17,30 +17,25 @@ import ShowMnemonic from "./components/ShowMnemonic";
 import InitAccount from "./components/InitAccount";
 import SignTransaction from "./components/SignTransaction";
 import FindMnemonic from "./components/FindMnemonic";
-import Navigate from "./components/Navigate";
 
 const App = () => {
 	return (
-		<BrowserRouter>
 			<Routes>
 				<Route path="/*" element={<Home />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/create" element={<Create />} />
-				<Route element={<Navigate />}>
-					<Route path="/content" element={<Content />} />
-					<Route path="/account" element={<Account />} />
-					<Route path="/tokenlist" element={<TokenList />} />
-					<Route path="/transfer" element={<Transfer />} />
-					<Route path="/multisigtransfer" element={<MultiSigTransfer />} />
-					<Route path="/myaccount" element={<MyAccount />} />
-					<Route path="/showmnemonic" element={<ShowMnemonic />} />
-					<Route path="/initaccount" element={<InitAccount />} />
-					<Route path="/signtransaction" element={<SignTransaction />} />
-					<Route path="/findmnemonic" element={<FindMnemonic />} />
-					<Route path="/createmultisig" element={<CreateMultiSig />} />
-				</Route>
+				<Route path="/content" element={<Content />} />
+				<Route path="/account" element={<Account />} />
+				<Route path="/tokenlist" element={<TokenList />} />
+				<Route path="/transfer" element={<Transfer />} />
+				<Route path="/multisigtransfer" element={<MultiSigTransfer />} />
+				<Route path="/myaccount" element={<MyAccount />} />
+				<Route path="/showmnemonic" element={<ShowMnemonic />} />
+				<Route path="/initaccount" element={<InitAccount />} />
+				<Route path="/signtransaction" element={<SignTransaction />} />
+				<Route path="/findmnemonic" element={<FindMnemonic />} />
+				<Route path="/createmultisig" element={<CreateMultiSig />} />
 			</Routes>
-		</BrowserRouter>
 	);
 };
 

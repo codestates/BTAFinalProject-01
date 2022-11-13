@@ -8,7 +8,7 @@ import { CONST } from "@cityofzion/neon-js";
 const Transfer = () => {
 	const [userAcc, setUserAcc] = useState();
 	const [fromAddress, setFromAddress] = useState("");
-	console.log(CONST.NATIVE_CONTRACT_HASH.NeoToken);
+	// console.log(CONST.NATIVE_CONTRACT_HASH.NeoToken);
 	// 웹에서 볼 때 주석 처리 !!
   chrome.storage.local.get(["address", "privateKey", "publicKey", "scriptHash" ], (res) => {
     setUserAcc({
@@ -30,28 +30,25 @@ const Transfer = () => {
   const handleAmount = (e) => { setAmount(e.target.value); };
 	const handleChange = async(event) => {
 		setToken(event.target.value);
-		console.log(token);
+		// console.log(token);
 	};
 
 	const handleClick = async(event) => {
 		const userAccount = userAcc;
-		// const userAccount = {
-		// 	address: "NX3TCZ28zTppd53or2wQBjC5xXAXDyeLGP",
-		// 	privateKey: "d3f757bf350b9e79197e739971d97fbacdc181abd3a6bb66c0d2ac85bd5b3fcb",
-		// 	publicKey: "02144d47c73c2e74bf5cb427b3a526845143cb7e1727c1d397fdd3451728d9223b",
-		// 	scriptHash: "753d85c69d9f6653d40af66e6637928a17ae137a"
-		// }
-		// const toAddress = 'NTcWc839XGP39YrCrWkZseXNtBCGGxrzkQ';
-		// const tokenAmount = 5;
 		const toAddress = ToAddress;
 		const tokenAmount = amount;
 		const tokenHash = token;
 		
 		// 토큰 셀렉트 -> Neo, Gas -> Tokenhash
 		// result hash값 저장 -> transaction list up
-		const result = await walletAPI.transfer(userAccount, toAddress, tokenHash, tokenAmount);
+		// const result = await walletAPI.transfer(userAccount, toAddress, tokenHash, tokenAmount);
+		const result = (userAccount, toAddress, tokenHash, tokenAmount);
 		console.log(result);
-		console.log('success transfer')
+		chrome.storage.local.set({ transfer: result });
+		// chrome.storage.local.get("transfer", (result) => {
+		// 	updateTransfer(result);
+		// });
+		// updateTransfer(result);
 		alert('success transfer: ' + result);
 	};
 

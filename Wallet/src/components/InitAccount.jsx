@@ -8,13 +8,16 @@ const InitAccount = () => {
 	const navigate = useNavigate();
 
   const handleInit= () => {
-    // chrome.storage.sync.set({'password': null});
-    // chrome.storage.local.set({'password': null});
-    // chrome.storage.local.set({'mnemonic': null});
-    // chrome.storage.local.set({'account': []});
-    // chrome.storage.sync.set({'accountSelected': null});
-    // chrome.storage.sync.set({'currentShard': 0});
-    // chrome.storage.sync.set({'currentNetwork': 'testnet'});
+    chrome.storage.local.set({password: null});
+    chrome.storage.local.set({login: null});
+    chrome.storage.local.set({ nep2Key: null });
+    chrome.storage.local.set({ address: null });
+    chrome.storage.local.set({ mnemonic: null });
+    chrome.storage.local.set({ publicKey: null });
+    chrome.storage.local.set({ privateKey: null });
+    chrome.storage.local.set({ WIF: null });
+    chrome.storage.local.set({ scriptHash: null });
+    
   alert('지갑이 초기화 되었습니다');
     navigate("/");
   };

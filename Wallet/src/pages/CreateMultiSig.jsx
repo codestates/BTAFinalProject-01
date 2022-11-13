@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import RemoveCircleOutlinedIcon from "@mui/icons-material/RemoveCircleOutlined";
 import { Typography, Box, Select, Button, Modal, TextField, MenuItem, Stack } from "@mui/material";
-import * as msAPI from "../APIs/multisigAPI";
+import * as ms from "../APIs/multisigAPI";
 import { Link } from "react-router-dom";
 
 const CreateMultiSig = () => {
@@ -17,14 +17,19 @@ const CreateMultiSig = () => {
 
 	const myPubKey = userPub;
 	const [pubkeyList, setPubkeyList] = useState([myPubKey, ""]);
+	const [idList, setIdList] = useState(["", ""]);
 	const [num, setNum] = useState(2);
-	const [webHook, setWebHook] = useState("");
 	const [multiSig, setMultiSig] = useState("");
 
 	useEffect(() => {}, [multiSig]);
 
 	const onAddDetailDiv = () => {
 		setPubkeyList([...pubkeyList, ""]);
+		setIdList([...idList, ""]);
+	};
+
+	const handleSelect = (event) => {
+		setNum(event.target.value);
 	};
 
 	const onRemoveDetailDiv = () => {
@@ -33,26 +38,19 @@ const CreateMultiSig = () => {
 			pubkeyList2.pop();
 			setPubkeyList([...pubkeyList2]);
 		}
+
+		let idList2 = [...idList];
+		if (idList.length != 2) {
+			idList2.pop();
+			setIdList([...idList2]);
+		}
 	};
 
-	const handleSelect = (event) => {
-		setNum(event.target.value);
-	};
-
-	const handleWebHook = (event) => {
-		setWebHook(event.target.value);
-	};
-
-	const generateAccount = async (event) => {
-		const result = msAPI.createMultiSig(num, pubkeyList);
+	const generateAccount = (event) => {
+		const result = ms.createMultiSig(num, pubkeyList);
 		console.log(result);
 		setMultiSig(result);
-		chrome.storage.local.set({ multiSig: result });
-		chrome.storage.local.set({ webHook: webHook });
-		const msg = `${pubkeyList} 을 이용하여 새로운 멀티시그 address가 만들어졌습니다! \n
-		생성된 multisig address: ${multiSig} \n
-		(${num}/${pubkeyList.length})의 서명이 있어야 트랜잭션이 발생합니다. \n`
-		await msAPI.sendMSG( webHook, msg).then((res) => {console.log(res);})
+		chrome.storage.local.set({ multiSig: result.multiSig });
 	};
 
 	const DetailList = () => {
@@ -60,7 +58,7 @@ const CreateMultiSig = () => {
 			<Box sx={{ flexGrow: 1, pt: 2}}>
 				{pubkeyList.map((item, i) => (
 					<div key={i}>
-						<label>{`User ${i + 1}`}</label>
+						<label style={{ marginTop: "20px" }}>{`User ${i + 1}`}</label>
 						<div style={{ marginBottom: "20px" }}>
 							<Typography variant="subtitle2">PubKey</Typography>
 							<TextField
@@ -72,6 +70,16 @@ const CreateMultiSig = () => {
 									let pubkeys = [...pubkeyList];
 									pubkeys[i] = e.target.value;
 									setPubkeyList([...pubkeys]);
+								}}
+							/>
+							<Typography variant="subtitle2">Slack ID</Typography>
+							<TextField
+								size="small"
+								style={{ height: "2%", width: "90%" }}
+								onChange={(e) => {
+									let id = [...idList];
+									id[i] = e.target.value;
+									setIdList([...id]);
 								}}
 							/>
 						</div>
@@ -101,31 +109,28 @@ const CreateMultiSig = () => {
 	};
 
 	return (
-		<div>
-			<Box sx={{ flexGrow: 1 }}>
-				<div style={{ marginTop: "10px" }}>
-					{DetailList()}
+		<Box sx={{ flexGrow: 1, p: 3 }}>
+			<div>
+				<Typography variant="button">Here is multisig account</Typography>
+				<br/>
+				<Typography variant="body2" color="primary">{`: ${multiSig}`}</Typography>
+				{DetailList()}
+				<Stack direction="row" justifyContent="center">
 					<Button onClick={onAddDetailDiv}>
 						<AddCircleOutlinedIcon /> 추가
 					</Button>
 					<Button onClick={onRemoveDetailDiv}>
 						<RemoveCircleOutlinedIcon /> 삭제
 					</Button>
-					{SelectNum()}
-					<TextField
-								label={"Discord WebHook Link"}
-								style={{ height: "2%", width: "90%" }}
-								onChange={handleWebHook}
-						/>
-					<div style={{ marginTop: "20px", marginLeft: "10%" }}>
-						<Button variant="contained" onClick={generateAccount}>
-							{"Create multiSig account"}
-						</Button>
-					</div>
-					<div>{`Here is multisig account : ${multiSig}`}</div>
-				</div>
-			</Box>
-		</div>
+				</Stack>
+				{SelectNum()}		
+			</div>
+			<Stack spacing={1} sx={{pr:4, mt:1 }} justifyContent="center">
+					<Button variant="contained" onClick={generateAccount}>
+						{"Create multiSig account"}
+					</Button>
+				</Stack>
+		</Box>
 	);
 };
 

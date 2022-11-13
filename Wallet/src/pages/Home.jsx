@@ -9,11 +9,14 @@ const Home = () => {
 	const [isLogin, setIsLogin] = useState(false);
 	useEffect(() => {
 		chrome.storage.local.get("login", (res) => {
+			if (res.login == true) {
+			navigate(`/content`);
 			setIsLogin(true);
-			console.log(res);
+			}
 		});
-	}, [isLogin])
-	
+		
+	}, [isLogin]);
+
 	return (
 		<Box>
 			{isLogin ? (
