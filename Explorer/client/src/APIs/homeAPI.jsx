@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { CONST, rpc, sc, wallet, tx, u } from "@cityofzion/neon-core";
 const url = process.env.REACT_APP_RESTFUL_API;
+// const rpcURL = process.env.REACT_APP_PRIVATE_RPC_URL;
+// const rpcClient = new rpc.RPCClient(rpcURL);
+// const ethers = require('ethers');
+
 
 export const getLastestInfo = async () => {
     return await axios.get(url+'stats')
