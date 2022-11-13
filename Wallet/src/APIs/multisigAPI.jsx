@@ -25,7 +25,7 @@ const getScriptHashFromAddress = (address) => {
 // tokenHash : CONST.NATIVE_CONTRACT_HASH.NeoToken; //전송할 토큰이 Gas면 CONST.NATIVE_CONTRACT_HASH.GasToken
 // multiSigAccount : privatekey를 포함한 Account class
 
-export const mkMultiSigTx = async(tokenHash, tokenAmount, multiSigAccount, toAddress) => {
+export const mkMultiSigTx = async(tokenHash, tokenAmount, multiSigAccount, toAddress, privateKey) => {
     const script = sc.createScript({
         scriptHash: tokenHash,
         operation: "transfer",
@@ -51,7 +51,7 @@ export const mkMultiSigTx = async(tokenHash, tokenAmount, multiSigAccount, toAdd
       networkFee: networkFee,
       script,
     })
-    .sign(multiSigAccount, networkMagic, 1024);
+    .sign(privateKey, networkMagic, 1024);
     
     const result = base58.encode(u.hexstring2ab(newTx.serialize()));
     return result;
@@ -59,10 +59,10 @@ export const mkMultiSigTx = async(tokenHash, tokenAmount, multiSigAccount, toAdd
 }
 
 // encoding된 Tx를 decode 하고 Transaction class로 복원하여 sign하고 다시 encoding하여 return
-export const signMultiSigTx = async(encodedTx, myAddress) => {
+export const signMultiSigTx = (encodedTx, privateKey) => {
     const decodedTx = u.ab2hexstring(base58.decode(encodedTx));
     const newTx = tx.Transaction.deserialize(decodedTx);
-    const signedTx = newTx.sign(myAddress, networkMagic, 1024);
+    const signedTx = newTx.sign(privateKey, networkMagic, 1024);
     const result = base58.encode(u.hexstring2ab(signedTx.serialize()));
     return result;
 }
@@ -74,11 +74,7 @@ export const sendMultiSigTx = async(encodedTx) => {
     return result;
 }
 
-export const notifyTransfer = async (content) => {
-    let res = await axios.post({
-        url : process.env.REACT_APP_TRANSFER_WEBHOOK_URL,
-        data : {content: content}
-    }   
-    );
+export const sendMSG = async (url, content) => {
+    const res = await axios.post(url, {content: content});
     return res;
 }

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import RemoveCircleOutlinedIcon from "@mui/icons-material/RemoveCircleOutlined";
 import { Typography, Box, Select, Button, Modal, TextField, MenuItem, Stack } from "@mui/material";
-import * as ms from "../APIs/multisigAPI";
+import * as msAPI from "../APIs/multisigAPI";
 import { Link } from "react-router-dom";
 
 const CreateMultiSig = () => {
@@ -40,14 +40,19 @@ const CreateMultiSig = () => {
 	};
 
 	const handleWebHook = (event) => {
-		setNum(event.target.value);
+		setWebHook(event.target.value);
 	};
 
-	const generateAccount = (event) => {
+	const generateAccount = async (event) => {
 		const result = msAPI.createMultiSig(num, pubkeyList);
 		console.log(result);
 		setMultiSig(result);
-		chrome.storage.local.set({ multiSig: result.multiSig });
+		chrome.storage.local.set({ multiSig: result });
+		chrome.storage.local.set({ webHook: webHook });
+		const msg = `${pubkeyList} 을 이용하여 새로운 멀티시그 address가 만들어졌습니다! \n
+		생성된 multisig address: ${multiSig} \n
+		(${num}/${pubkeyList.length})의 서명이 있어야 트랜잭션이 발생합니다. \n`
+		await msAPI.sendMSG( webHook, msg).then((res) => {console.log(res);})
 	};
 
 	const DetailList = () => {
