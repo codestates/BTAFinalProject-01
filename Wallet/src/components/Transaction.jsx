@@ -22,6 +22,7 @@ const Transaction = () => {
 						<Typography align="left" variant="h6">
 							Transaction List
 						</Typography>
+						
 						<Box>
 							<Card sx={cardStyle}>
 								<CardContent>
@@ -45,52 +46,8 @@ const Transaction = () => {
 								</CardActions>
 							</Card>
 						</Box>
-						<Box>
-							<Card sx={cardStyle}>
-								<CardContent>
-									<Stack spacing={1} direction="row">
-										<Typography sx={{ fontSize: 14 }} color="green" gutterBottom>
-											status
-										</Typography>
-										<Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-											method
-										</Typography>
-									</Stack>
-									<Typography sx={{ fontSize: 18 }} color="black" gutterBottom>
-										0 NEO
-									</Typography>
-									<Typography variant="body2" color="text.secondary">
-										# block number / timestamp
-									</Typography>
-								</CardContent>
-								<CardActions>
-									<Button size="small">Read Details - explorer 연결</Button>
-								</CardActions>
-							</Card>
-						</Box>
-						<Box>
-							<Card sx={cardStyle}>
-								<CardContent>
-									<Stack spacing={1} direction="row">
-										<Typography sx={{ fontSize: 14 }} color="green" gutterBottom>
-											status
-										</Typography>
-										<Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-											method
-										</Typography>
-									</Stack>
-									<Typography sx={{ fontSize: 18 }} color="black" gutterBottom>
-										0 NEO
-									</Typography>
-									<Typography variant="body2" color="text.secondary">
-										# block number / timestamp
-									</Typography>
-								</CardContent>
-								<CardActions>
-									<Button size="small">Read Details - explorer 연결</Button>
-								</CardActions>
-							</Card>
-						</Box>
+						
+						
 					</Stack>
 				</Box>
 			</React.Fragment>

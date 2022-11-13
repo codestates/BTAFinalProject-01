@@ -24,7 +24,7 @@ const TokenList = () => {
 								<ListItemAvatar>
 									<Avatar><PaidRoundedIcon/></Avatar>
 								</ListItemAvatar>
-								<ListItemText primary="Token Name" secondary="Token Balancse" />
+								<ListItemText primary="NEO" secondary="Token Balancse" />
 							</ListItem>
 						</List>
 						<Divider />
@@ -35,7 +35,7 @@ const TokenList = () => {
 								<ListItemAvatar>
 									<Avatar><PaidRoundedIcon/></Avatar>
 								</ListItemAvatar>
-								<ListItemText primary="Token Name" secondary="Token Balancse" />
+								<ListItemText primary="GAS" secondary="Token Balancse" />
 							</ListItem>
 						</List>
 						<Divider />

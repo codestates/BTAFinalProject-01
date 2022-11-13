@@ -3,50 +3,48 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Box, Stack, TextField, FormControl, InputLabel, Select, MenuItem, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import * as walletAPI from '../APIs/walletAPI';
+import { CONST, wallet } from "@cityofzion/neon-js";
 
 const Transfer = () => {
-	// const [token, setToken] = React.useState("");
 	const [userAcc, setUserAcc] = useState();
-	const [fromAddress, setFromAddress] = useState();
+	const [fromAddress, setFromAddress] = useState("");
+	
 	// 웹에서 볼 때 주석 처리 !!
-  chrome.storage.local.get(["address", "privateKey", "publicKey", "scriptHash" ], (res) => {
-    setUserAcc({
-			address: res.address,
-			privateKey: res.privateKey,
-			publicKey: res.publicKey,
-			scriptHash: res.scriptHash
-		});
-		// console.log(userAcc);
-  });
-	chrome.storage.local.get("address", (res) => {
+  chrome.storage.local.get("decryptedAcc", (res) => {
+    setUserAcc(res.decryptedAcc);
 		setFromAddress(res.address);
+		// console.log(0, res);
+		// console.log(1, userAcc);
   });
+
+	// chrome.storage.local.get("address", (res) => {
+	// 	setFromAddress(res.address);
+  // });
 
 	const [ToAddress, setToAddress] = useState(""); // 받는 사람 주소
   const [amount, setAmount] = useState(""); // 전송할 토큰 양
+	const [token, setToken] = useState(); // 전송할 토큰 선택
 	const handleTo = (e) => { setToAddress(e.target.value); };
   const handleAmount = (e) => { setAmount(e.target.value); };
-
-	// const handleChange = async(event) => {
-	// 	setToken(event.target.value);
-	// 	console.log(token);
-	// };
+	const handleChange = async(event) => {
+		setToken(event.target.value);
+		// console.log(token);
+	};
 
 	const handleClick = async(event) => {
-		const userAccount = userAcc;
-		// const userAccount = {
-		// 	address: "NX3TCZ28zTppd53or2wQBjC5xXAXDyeLGP",
-		// 	privateKey: "d3f757bf350b9e79197e739971d97fbacdc181abd3a6bb66c0d2ac85bd5b3fcb",
-		// 	publicKey: "02144d47c73c2e74bf5cb427b3a526845143cb7e1727c1d397fdd3451728d9223b",
-		// 	scriptHash: "753d85c69d9f6653d40af66e6637928a17ae137a"
-		// }
-		// const toAddress = 'NTcWc839XGP39YrCrWkZseXNtBCGGxrzkQ';
-		// const tokenAmount = 5;
+		// const userAccount = userAcc;
+		console.log(2, userAcc)
+		// const userAccount = new wallet.Account(userAcc);
 		const toAddress = ToAddress;
 		const tokenAmount = amount;
-		const result = await walletAPI.transfer(userAccount, toAddress, tokenAmount);
-		console.log(result);
-		console.log('success transfer')
+		const tokenHash = token;
+		// console.log(7, userAccount);
+
+		// result hash값 저장 -> transaction list up
+		const result = await walletAPI.transfer(userAcc, toAddress, tokenHash, tokenAmount);
+		console.log(3, result);
+		chrome.storage.local.set({ transfer: result });
+		alert('success transfer: ' + result);
 	};
 
 	return (
@@ -59,7 +57,7 @@ const Transfer = () => {
 							보내는 사람
 						</Typography>
 						{/* 내 어카운트의 address default로 넣기 */}
-						<TextField id="FromAddress" defaultValue={fromAddress} label="From Address" variant="outlined" size="small" />
+						<TextField diabled id="FromAddress" defaultValue={fromAddress} placeholder={fromAddress} variant="outlined" size="small" />
 					</Stack>
 					<Stack direction="column" justifyContent="space-between" alignItems="left" spacing={1}>
 						<Typography align="left" variant="h7">
@@ -67,21 +65,18 @@ const Transfer = () => {
 						</Typography>
 						<TextField id="ToAddress" label="To Address" variant="outlined" size="small" onChange={(e) => handleTo(e)} />
 					</Stack>
-					{/* <Stack direction="column" justifyContent="space-between" alignItems="left" spacing={1}>
+					<Stack direction="column" justifyContent="space-between" alignItems="left" spacing={1}>
 						<Typography align="left" variant="h7">
 							토큰 선택
 						</Typography>
 						<FormControl fullWidth size="small">
 							<InputLabel id="demo-simple-select-helper-label">Token</InputLabel>
 							<Select labelId="demo-simple-select-helper-label" id="demo-simple-select-helper" value={token} label="Token" onChange={handleChange}>
-								<MenuItem value="">
-									<em>None</em>
-								</MenuItem>
-								<MenuItem value={10}>NEO</MenuItem>
-								<MenuItem value={20}>Token1</MenuItem>
+								<MenuItem value={CONST.NATIVE_CONTRACT_HASH.NeoToken}>NEO</MenuItem>
+								<MenuItem value={CONST.NATIVE_CONTRACT_HASH.GasToken}>GAS</MenuItem>
 							</Select>
 						</FormControl>
-					</Stack> */}
+					</Stack>
 					<Stack direction="column" justifyContent="space-between" alignItems="left" spacing={1}>
 						<Typography align="left" t="h7">
 							토큰 양
