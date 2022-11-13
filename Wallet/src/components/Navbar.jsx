@@ -1,3 +1,4 @@
+/*global chrome*/
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -16,12 +17,13 @@ import {
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import PersonAdd from "@mui/icons-material/PersonAdd";
-import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const [network, setNetwork] = React.useState("10");
+	const navigate = useNavigate();
 
 	const handleNetwork = (event) => {
 		setNetwork(event.target.value);
@@ -34,6 +36,12 @@ const Navbar = () => {
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
+
+	const handleLogout = () => {
+		chrome.storage.local.set({ login: false });
+		alert('로그아웃')
+    navigate("/login");
+	}
 
 	return (
 		<>
@@ -96,13 +104,7 @@ const Navbar = () => {
 									</ListItemIcon>
 									New Multisig
 								</MenuItem>
-								{/* <MenuItem>
-									<ListItemIcon>
-										<Settings fontSize="small" />
-									</ListItemIcon>
-									Setting
-								</MenuItem> */}
-								<MenuItem>
+								<MenuItem onClick={handleLogout}>
 									<ListItemIcon>
 										<Logout fontSize="small" />
 									</ListItemIcon>

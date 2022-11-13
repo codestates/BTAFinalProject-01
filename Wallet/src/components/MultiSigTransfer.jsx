@@ -40,14 +40,14 @@ const MultiSigTransfer = () => {
 		const result = await mx.mkMultiSigTx(tokenHash, tokenAmount, multiSigAccount, toAddress);
 		console.log(result);
 		console.log('success transfer')
-		alert('success transfer: ' + result)
+		alert('success transfer: ' + result);
 	};
 
 	return (
 		<>
 			<Box sx={{ p: 3 }}>
 				<Stack spacing={2} direction="column" justifyContent="center">
-					<Typography variant="h6">Token Transfer</Typography>
+					<Typography variant="h6">MultiSig Transfer</Typography>
 					<Stack direction="column" justifyContent="space-evenly" alignItems="left" spacing={1}>
 						<Typography align="left" variant="h7">
 							보내는 사람

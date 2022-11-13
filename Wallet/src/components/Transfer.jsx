@@ -52,7 +52,7 @@ const Transfer = () => {
 		const result = await walletAPI.transfer(userAccount, toAddress, tokenHash, tokenAmount);
 		console.log(result);
 		console.log('success transfer')
-		alert('success transfer: ' + result)
+		alert('success transfer: ' + result);
 	};
 
 	return (
