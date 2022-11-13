@@ -41,6 +41,10 @@ curl http://127.0.0.1:40332 -d '{"jsonrpc":"2.0","method":"getnep17balances","pa
 ## INFO
 3개의 노드(Consensus,Client1,Client2)로 구성됨
 
+역할
+- 블록생성 제안 => consensu node
+- 블록 검증    => client node  
+
 * **Consensus**
   * Address: `NM7Aky765FG8NhhwtxjXRx7jEL1cnw7PBP`
     * PrivKey: `84180ac9d6eb6fba207ea4ef9d2200102d1ebeb4b9c07e2c6a738a42742e27a5`
