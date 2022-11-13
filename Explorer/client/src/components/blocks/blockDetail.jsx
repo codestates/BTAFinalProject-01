@@ -8,14 +8,16 @@ function BlockInfo() {
     const location = useLocation();
     const blockNum = Number(location.pathname.split("/").pop());
     const [b_info, setB_info] = useState(0);
+    const [tx, setTx] = useState([]);
+    
 
     const getBlock = async () => {
         const res = await blockAPI.getBlockInfo(blockNum);
-        console.log("res",res);
         setB_info(res);
+        setTx(res.tx);
     };
 
-    const {time, size, hash, tx, script } = b_info;
+    const {time, size, hash, witnesses} = b_info;
 
     useEffect(() => {
         getBlock();
@@ -56,14 +58,27 @@ function BlockInfo() {
         <Row gutter={16}>
           <Col span={8}>
             <Card title="Invocation Script" bordered={false}>
-                {script ? multiLine(script.invocation) : "undefined"}
+                {witnesses ? multiLine(witnesses[0].invocation) : "undefined"}
             </Card>
           </Col>
           <Col span={8}>
             <Card title="Verification Script" bordered={false}>
-                {script ? multiLine(script.verification) : "undefined"}
+                {witnesses ? multiLine(witnesses[0].verification) : "undefined"}
             </Card>
           </Col>
+        </Row>
+        <h2>Transactions</h2>
+        <Row gutter={16}>
+            <Card title="Invocation Script" bordered={false}>
+                {tx.length > 0 ?  
+                    tx.map((el) => { 
+                        let txid = el.hash.slice(2,);
+                        return (<div>
+                            <a href={`http://localhost:3000/txs/${txid}`}>{txid}</a>
+                        </div>)
+                            
+                    }) : "no txs"}
+            </Card>
         </Row>
       </div>
     )

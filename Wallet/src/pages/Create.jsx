@@ -12,6 +12,7 @@ const theme = createTheme();
 const Create = () => {
 	const navigate = useNavigate();
 	const [myPassword, setMyPassword] = useState();
+	const [myMnemonic, setMnemonic] = useState();
 	
 	useEffect(() => {
 		console.log(myPassword);
@@ -28,28 +29,30 @@ const Create = () => {
 			setIsPasswordSame(true);
 			setMyPassword(password);
 			console.log('set password');
-			const createRes = await walletAPI.createWallet(password);
+			const [createRes, mnemonic] = await walletAPI.createWallet(password);
 			console.log(createRes);
-			console.log(createRes.nep2Key);
+			console.log(createRes.address);
+			setMnemonic(mnemonic);
 			const balanceRes = await walletAPI.checkBalance(createRes.address);
+			// Res 값 확인
 			console.log(balanceRes);
 			
 			// 웹에서 볼 때 주석 처리 !!
-			chrome.storage.local.set({ nep2Key: createRes.nep2Key });
-			chrome.storage.local.set({ address: createRes.address });
-			chrome.storage.local.set({ mnemonic: createRes.mnemonic });
-			chrome.storage.local.set({ publicKey: createRes.publicKey });
-			chrome.storage.local.set({ privateKey: createRes.privateKey });
-			chrome.storage.local.set({ WIF: createRes.WIF });
-			chrome.storage.local.set({ scriptHash: createRes.scriptHash });
-			
-			navigate(`/showmnemonic`);
+			chrome.storage.local.set({ encryptedAcc: createRes });
+			// chrome.storage.local.set({ mnemonic: mnemonic });
+			// chrome.storage.local.set({ publicKey: createRes.publicKey });
+			// chrome.storage.local.set({ privateKey: createRes.privateKey });
+			// chrome.storage.local.set({ scriptHash: createRes.scriptHash });
 		} else {
 			setIsPasswordSame(false);
 			setMyPassword();
 			console.log('error')
 		}
 	};
+	const handleLogin = () => {
+		navigate(`/login`);
+	}
+	
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -62,9 +65,15 @@ const Create = () => {
 						flexDirection: "column",
 						alignItems: "center",
 					}}>
-					<Avatar sx={{ m: 3, bgcolor: "success.main" }}>
-						<LockOutlinedIcon />
-					</Avatar>
+					{isPasswordSame ? (
+							<Stack sx={{ width: '100%' }} spacing={2}>
+								<Alert severity="success">{myMnemonic}</Alert>
+							</Stack>
+						) : (
+							<Stack sx={{ width: '100%' }} spacing={2}>
+								<Alert severity="error">일치하지 않습니다.</Alert>
+							</Stack>
+						)}
 					<Typography component="h6" variant="h6">
 						비밀번호를 입력하고, <br /> 니모닉 코드를 발급 받으세요.
 					</Typography>
@@ -97,13 +106,9 @@ const Create = () => {
 							Sign Up
 						</Button>
 
-						{isPasswordSame ? (
-							<Stack sx={{ width: '100%' }} spacing={2}></Stack>
-						) : (
-							<Stack sx={{ width: '100%' }} spacing={2}>
-								<Alert severity="error">일치하지 않습니다.</Alert>
-							</Stack>
-						)}
+						<Button onClick={handleLogin} fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+							로그인 하기
+						</Button>
 						
 					</Box>
 				</Box>

@@ -1,0 +1,6 @@
+APScheduler
+Flask
+flask_cors
+pymongo
+requests
+python-dotenv
