@@ -3,17 +3,23 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Stack, Typography, Button, Avatar, Box } from "@mui/material";
+import * as msAPI from "../APIs/multisigAPI";
 
 const Home = () => {
 	const navigate = useNavigate();
 	const [isLogin, setIsLogin] = useState(false);
+	
+	const a = "1121p6T5oHoxwFitSLh6z1kCRxhbwDVokNJ6DbnTK8d5L1V8KrKKuzPXbCiC7nsuR2kiy3sjoCBsasNBvbVjFxrdfRirJkXQXC5c6Qyz1i4H37ZQvL6mfwtgWrH6rxKjmjCBL2SBpiP4zRW2XU6RNqgLa2pjTd36QPqEooiMi2RtCKahEpr9vz9qfCP69ZSB1fZF4vSRcGUis4MJaXxGsABTrvBBFWstcvcxPvQjxULYKnM3BL9Xp9oUaq5AaSTjJEmeEuWCLGLpyzu4CCC5cXvuwqRrpP5UE2UoLYuHwNnubRzGZVJF655yWfmEntbzeCUYrtGEhaKGr";
+	const res = msAPI.signMultiSigTx(a, "84180ac9d6eb6fba207ea4ef9d2200102d1ebeb4b9c07e2c6a738a42742e27a5");
+	console.log(11,res);
+
 	useEffect(() => {
-		chrome.storage.local.get("login", (res) => {
-			if (res.login == true) {
-			navigate(`/content`);
-			setIsLogin(true);
-			}
-		});
+		// chrome.storage.local.get("login", (res) => {
+		// 	if (res.login == true) {
+		// 	navigate(`/content`);
+		// 	setIsLogin(true);
+		// 	}
+		// });
 		
 	}, [isLogin]);
 
