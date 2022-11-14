@@ -1,4 +1,5 @@
-import React from "react";
+/*global chrome*/
+import React, { useEffect, useState } from "react";
 import { Typography, Divider, Grid, List, ListItemAvatar, ListItem, ListItemText, Avatar, styled } from "@mui/material";
 import PaidRoundedIcon from '@mui/icons-material/PaidRounded';
 import { Link } from "react-router-dom";
@@ -8,6 +9,16 @@ const Demo = styled("div")(({ theme }) => ({
 }));
 
 const TokenList = () => {
+
+	const [userNeo, setUserNeo] = useState();
+	const [userGas, setUserGas] = useState();
+	chrome.storage.local.get("neoBal", (res) => {
+		setUserNeo(res.neoBal);
+  });
+	chrome.storage.local.get("gasBal", (res) => {
+		setUserGas(res.gasBal);
+  });
+
 	return (
 		<div>
 			<Typography id="modal-modal-title" variant="h6" component="h2" sx={{ mb: 2 }}>
@@ -24,7 +35,7 @@ const TokenList = () => {
 								<ListItemAvatar>
 									<Avatar><PaidRoundedIcon/></Avatar>
 								</ListItemAvatar>
-								<ListItemText primary="NEO" secondary="Token Balancse" />
+								<ListItemText primary="NEO" secondary={userNeo} />
 							</ListItem>
 						</List>
 						<Divider />
@@ -35,7 +46,7 @@ const TokenList = () => {
 								<ListItemAvatar>
 									<Avatar><PaidRoundedIcon/></Avatar>
 								</ListItemAvatar>
-								<ListItemText primary="GAS" secondary="Token Balancse" />
+								<ListItemText primary="GAS" secondary={userGas} />
 							</ListItem>
 						</List>
 						<Divider />

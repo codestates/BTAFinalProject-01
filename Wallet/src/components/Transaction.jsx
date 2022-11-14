@@ -44,7 +44,7 @@ const Transaction = () => {
 										</Typography>
 									</Stack>
 									<Typography sx={{ fontSize: 18 }} color="black" gutterBottom>
-										1 NEO
+										11 NEO
 									</Typography>
 									<Typography variant="body2" color="text.secondary">
 										# 11 - 11/13/2022 11:05
