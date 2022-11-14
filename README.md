@@ -74,6 +74,8 @@ npm run start
 
 ### Node ReadMe
 (https://github.com/codestates/BTAFinalProject-01/tree/main/Node)
+### Daemon ReadMe
+(https://github.com/codestates/BTAFinalProject-01/tree/main/Daemon)
 
 
 ## Authors
