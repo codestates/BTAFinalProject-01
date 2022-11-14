@@ -33,10 +33,12 @@ https://github.com/codestates/BTAFinalProject-01.git
 ```
 
 2. change directory
+
 Explorer
 ```
 cd BTAFinalProject-01/Explorer/client
 ```
+
 Wallet
 ```
 cd BTAFinalProject-01/Wallet
@@ -74,7 +76,7 @@ npm run start
 
 이름 | 역할 | Github 
 ---- | ---- | ---- 
-오하영 | Explorer 구현, Wallet multisig account, transaction 구현, NEP17 token 전송 테스트 | https://github.com/Hayoung5
-이종환 | NEO Blockchain Node Setup, Blokchain Daemon API, Rest API 개발, Blockchain RPC Test | https://github.com/novela77
-정웅섭 | Wallet 기능 BE: 월렛 생성, 니모닉 코드 생성, 암호 재설정, 토큰 전송, Github 이슈, PR, 브랜치 등, 코드 관리 | https://github.com/woongsup123
+오하영 | Explorer 구현, Wallet multisig account, tx구현, NEP17 토큰 전송 테스트 | https://github.com/Hayoung5
+이종환 | Node Setup, Daemon API, Rest API 개발, RPC Test | https://github.com/novela77
+정웅섭 | Wallet BE: 월렛 생성, 니모닉 코드 생성, 암호 재설정, 토큰 전송 | https://github.com/woongsup123
 홍유진 | NEO Wallet Extension 구현, Wallet FE 기능 | https://github.com/yu-uj
