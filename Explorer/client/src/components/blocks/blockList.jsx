@@ -9,21 +9,13 @@ function BlockList() {
     const [pagenum, setPagenum] = useState(1);
     const pageInc = () => { setPagenum(pagenum + 1); }
     const pageDec = () => { if (pagenum > 1) {setPagenum(pagenum -1);} }
+
     const getData = async () => {
-        const res = await blockAPI.getPageBlockList(pagenum-1);
-        if (res.length > 0) {
-            const res2 = res.map((el,idx) => {
-                return ({
-                    key : idx,
-                    index: el.index,
-                    hash: el.hash,
-                    txs: `${el.tx.length} txs`,
-                    size: `${el.size} bytes`,
-                    time: time.Unix_timestamp(el.time),
-                });
-            });
-            setData(res2);
-        }
+        const res = await blockAPI.getPageBlockList(pagenum);
+        setData(res.data.items.map(el => {
+            el.time = time.Unix_timestamp(el.time); 
+            return el;
+        }));
     };
 
     useEffect(() => {

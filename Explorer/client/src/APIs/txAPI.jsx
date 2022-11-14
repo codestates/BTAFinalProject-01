@@ -1,19 +1,61 @@
-import Neon, { rpc } from "@cityofzion/neon-js";
-
-const url = process.env.REACT_APP_PRIVATE_RPC_URL;
-const rpcClient = Neon.create.rpcClient(url);
-
+import axios from 'axios';
+const url = process.env.REACT_APP_RESTFUL_API;
 
 export const getTxInfo = async (txid) => {
-    let query = Neon.create.query({ 
-        "jsonrpc": "2.0",
-        "method": "getrawtransaction",
-        "params": [txid, true],
-        "id": 1
+    return await axios.get(url+`transaction/${txid}`)
+    .catch(function (error) {
+        console.log(error);
+      if (error.response) {
+        console.log(error.response);
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+      console.log(error.config);
     });
+}
 
-	return await rpcClient.execute(query);
-	// return await rpcClient.getRawTransaction(txid,true);
+export const get5TxList = async () => {
+    return await axios.get(url+`transactions/1`)
+    .catch(function (error) {
+      if (error.response) {
+        console.log(error.response);
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+      console.log(error.config);
+    });
+}
+
+export const getPageTxList = async (pagenum) => {
+    return await axios.get(url + `transactions/${pagenum}`)
+    .catch(function (error) {
+      if (error.response) {
+        console.log(error.response);
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+      console.log(error.config);
+    });
+}
+
+
+/**
+export const getTxInfo = async (txid) => {
+    // let query = Neon.create.query({ 
+    //     "jsonrpc": "2.0",
+    //     "method": "getrawtransaction",
+    //     "params": [txid, true],
+    //     "id": 1
+    // });
+
+	// return await rpcClient.execute(query);
+	return await rpcClient.getRawTransaction(txid,true);
 }
 
 export const getTxBlockNum = async (blockHash) => {
@@ -63,3 +105,4 @@ export const getPageTxList = async (pagenum) => {
         return result;
     });
 }
+**/

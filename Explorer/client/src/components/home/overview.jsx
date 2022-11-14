@@ -3,20 +3,11 @@ import { Card, Col, Row } from "antd";
 import * as homeAPI from '../../APIs/homeAPI';
 
 function Overview() {
-    const stats = {addresses:1,contracts:2};
-    const { addresses, contracts, transactions } = stats
-    const [height, setHeight] = useState(0);
-    const [txheight, setTxHeight] = useState(0);
-    const [addnum, setAddNum] = useState(0);
+    const [data, setData] = useState(0);
 
     const getData = async () => {
-        const res = await homeAPI.getLatestBlock();
-        setHeight(res);
-        const res2 = await homeAPI.getLatestTx();
-        setTxHeight(res2);
-        const res3 = await homeAPI.getLatestAdd();
-        console.log(res3);
-        setAddNum(res3.length);
+        const res = await homeAPI.getLastestInfo();
+        setData(res.data);
     };
 
     useEffect(() => {
@@ -29,24 +20,24 @@ function Overview() {
         <Row gutter={16} style={{textAlign: "center", marginLeft : "15%", marginBottom : "1%"}}>
           <Col span={6}>
             <Card title="Total Blocks" bordered={false}>
-                {height ? height : 0}
+                {data.height ? data.height : 0}
             </Card>
           </Col>
           <Col span={6}>
             <Card title="Total Transactions" bordered={false}>
-                {txheight ? txheight : 0}
+                {data.transactions ? data.transactions : 0}
             </Card>
           </Col>
         </Row>
         <Row gutter={16} style={{textAlign: "center", marginLeft : "15%", marginBottom : "1%"}}>
           <Col span={6}>
             <Card title="Total Contracts" bordered={false}>
-                {contracts ? contracts : 0}
+                {data.contracts ? data.contracts : 0}
             </Card>
           </Col>
           <Col span={6}>
             <Card title="Total Addresses" bordered={false}>
-                {addnum ? addnum : 0}
+                {data.addresses ? data.addresses : 0}
             </Card>
           </Col>
         </Row>
