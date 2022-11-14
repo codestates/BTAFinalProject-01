@@ -23,7 +23,7 @@ const style = {
 
 const Navbar = () => {
 	const [anchorEl, setAnchorEl] = React.useState(null);
-	const [network, setNetwork] = React.useState("10");
+	const [network, setNetwork] = React.useState("30");
 	const navigate = useNavigate();
 
 	const [open, setOpen] = React.useState(false);
@@ -50,6 +50,11 @@ const Navbar = () => {
 		chrome.storage.local.set({ login: false });
 		alert("로그아웃");
 		navigate("/login");
+	};
+
+	const handleInit = () => {
+		alert("로그아웃");
+		navigate("/initaccount");
 	};
 
 	return (

@@ -1,5 +1,5 @@
 /*global chrome*/
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Box, Stack, Card, CardActions, CardContent, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { borderRadius } from "@mui/system";
@@ -14,6 +14,15 @@ const cardStyle = {
 };
 
 const Transaction = () => {
+
+	const [userTran, setUserTran] = useState();
+  chrome.storage.local.get("scriptHash", (res) => {
+    setUserTran(res.scriptHash);
+  });
+	useEffect(() => {
+		console.log(userTran);
+	}, [userTran]);
+
 	return (
 		<div>
 			<React.Fragment>
@@ -28,21 +37,21 @@ const Transaction = () => {
 								<CardContent>
 									<Stack spacing={1} direction="row">
 										<Typography sx={{ fontSize: 14 }} color="green" gutterBottom>
-											status
+											Success
 										</Typography>
 										<Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-											method
+											Transfer
 										</Typography>
 									</Stack>
 									<Typography sx={{ fontSize: 18 }} color="black" gutterBottom>
-										0 NEO
+										1 NEO
 									</Typography>
 									<Typography variant="body2" color="text.secondary">
-										# block number / timestamp
+										# 11 - 11/13/2022 11:05
 									</Typography>
 								</CardContent>
 								<CardActions>
-									<Button size="small">Read Details - explorer 연결</Button>
+									<Button size="small" href="http://localhost:3000/">Read Details - explorer 연결</Button>
 								</CardActions>
 							</Card>
 						</Box>

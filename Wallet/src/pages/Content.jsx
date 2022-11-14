@@ -28,10 +28,21 @@ const Content = () => {
 		setOpen(false);
 	};
 
+	// const [fromAddress, setFromAddress] = useState("");
+	
+	// // 웹에서 볼 때 주석 처리 !!
+	const [userBalance, setUserBalance] = useState();
+  chrome.storage.local.get("userBal", (res) => {
+    setUserBalance(res.userBal);
+  });
+	useEffect(() => {
+		console.log(userBalance);
+	}, [userBalance]);
+
+
 	const [userAdd, setUserAdd] = useState();
 	chrome.storage.local.get("address", (res) => {
 		setUserAdd(res.address);
-		console.log(userAdd);
   });
 
 
@@ -65,7 +76,7 @@ const Content = () => {
 
 					<Avatar><PaidRoundedIcon/></Avatar>
 					<Stack spacing={1} direction="row" justifyContent="center" alignItems="center">
-						<Typography variant="h6">Token Balance</Typography>
+						<Typography variant="h6" color="primary">{userBalance}</Typography>
 						<Typography>NEO</Typography>
 					</Stack>
 					<Stack spacing={2} direction="column" justifyContent="center" alignItems="center">

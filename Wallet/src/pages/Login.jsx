@@ -12,12 +12,7 @@ const theme = createTheme();
 
 const Login = () => {
 	const navigate = useNavigate();
-	const [savedUserAcc, setSavedUserAcc] = useState();
-	const [savedWIF, setSavedWIF] = useState();
 	const [isLogin, setIsLogin] = useState(false);
-	// useEffect(() => {
-	// 	chrome.storage.local.set({ decryptedAcc : savedUserAcc });
-	// }, [savedUserAcc]);
 
 	useEffect(() => {
 		chrome.storage.local.set({ login: true });
@@ -27,21 +22,21 @@ const Login = () => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
 		const pw = data.get("password");
-		console.log(pw);
+
 		// 웹에서 볼 때 주석 처리 !!
 		chrome.storage.local.get("encryptedAcc", async(res) => {
-			// setSavedNep2(res.nep2Key);
-			// setSavedWIF(res.WIF);
-      console.log(4, res)
 			const decryptedAccount = await walletAPI.Login(res.encryptedAcc, pw);
-			// const userAccount = new wallet.Account(decryptedAccount);
-      console.log(5, decryptedAccount);
-			// setSavedUserAcc(decryptedAccount);
       chrome.storage.local.set({ decryptedAcc: decryptedAccount });
 			setIsLogin(true);
 			alert("로그인 성공");
 			navigate("/content");
 		});
+	};
+
+	const backHome = () => {
+		setIsLogin(false);
+		chrome.storage.local.set({ login: false });
+		navigate("/");
 	};
 
 	return (
@@ -69,6 +64,9 @@ const Login = () => {
 						</Grid>
 						<Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
 							로그인
+						</Button>
+						<Button onClick={backHome} fullWidth variant="contained" sx={{ mb: 2 }}>
+							홈으로
 						</Button>
 					</Box>
 				</Box>

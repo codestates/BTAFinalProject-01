@@ -13,14 +13,12 @@ const Transfer = () => {
   chrome.storage.local.get("decryptedAcc", (res) => {
     setUserAcc(res.decryptedAcc);
 		setFromAddress(res.address);
-		// console.log(0, res);
-		// console.log(1, userAcc);
   });
 
-	// chrome.storage.local.get("address", (res) => {
-	// 	setFromAddress(res.address);
-  // });
-
+	const [userAdd, setUserAdd] = useState();
+	chrome.storage.local.get("address", (res) => {
+		setUserAdd(res.address);
+  });
 	const [ToAddress, setToAddress] = useState(""); // 받는 사람 주소
   const [amount, setAmount] = useState(""); // 전송할 토큰 양
 	const [token, setToken] = useState(); // 전송할 토큰 선택
@@ -28,21 +26,15 @@ const Transfer = () => {
   const handleAmount = (e) => { setAmount(e.target.value); };
 	const handleChange = async(event) => {
 		setToken(event.target.value);
-		// console.log(token);
 	};
 
 	const handleClick = async(event) => {
-		// const userAccount = userAcc;
-		console.log(2, userAcc)
-		// const userAccount = new wallet.Account(userAcc);
 		const toAddress = ToAddress;
 		const tokenAmount = amount;
 		const tokenHash = token;
-		// console.log(7, userAccount);
 
 		// result hash값 저장 -> transaction list up
 		const result = await walletAPI.transfer(userAcc, toAddress, tokenHash, tokenAmount);
-		console.log(3, result);
 		chrome.storage.local.set({ transfer: result });
 		alert('success transfer: ' + result);
 	};
@@ -57,7 +49,7 @@ const Transfer = () => {
 							보내는 사람
 						</Typography>
 						{/* 내 어카운트의 address default로 넣기 */}
-						<TextField diabled id="FromAddress" defaultValue={fromAddress} placeholder={fromAddress} variant="outlined" size="small" />
+						<TextField diabled id="FromAddress" defaultValue={userAdd} placeholder={userAdd} variant="outlined" size="small" />
 					</Stack>
 					<Stack direction="column" justifyContent="space-between" alignItems="left" spacing={1}>
 						<Typography align="left" variant="h7">
