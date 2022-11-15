@@ -6,8 +6,9 @@ const { Search } = Input;
 
 const onSearch = (val) => {
     const isAdd = Neon.is.address(val);
-    const isTx = (val.slice(0,2) === "0x" && val.length == 66);
-    const isBlockNum = (Number.isInteger(Number(val)) && val.length < 66);
+    const regex = /[0-9A-Fa-f]{6}/g;
+    const isTx = (val.match(regex) && val.length == 64);
+    const isBlockNum = (Number.isInteger(Number(val)) && val.length < 64);
     console.log(isAdd, isTx, isBlockNum);
     if (isAdd == false && isTx == false && isBlockNum == false) {
         window.alert(["No such address, block index and tx hash!"]);

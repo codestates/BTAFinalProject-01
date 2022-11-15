@@ -66,6 +66,7 @@ export const signMultiSigTx = (encodedTx, privateKey) => {
 }
 
 export const sendMultiSigTx = async(encodedTx, multisigAcct) => {
+    console.log(encodedTx, multisigAcct);
     const decodedTx = u.ab2hexstring(base58.decode(encodedTx));
     const newTx = tx.Transaction.deserialize(decodedTx);
     const multisigWitness = tx.Witness.buildMultiSig(
