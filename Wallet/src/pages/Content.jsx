@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 import Transaction from "../components/Transaction";
 import TokenList from "../components/TokenList";
 import PaidRoundedIcon from '@mui/icons-material/PaidRounded';
+import axios from 'axios';
+
+const apiURL = process.env.REACT_APP_RESTFUL_API;
 
 const style = {
 	position: "absolute",
@@ -19,8 +22,55 @@ const style = {
 	p: 3,
 };
 
+const getAddBalance = async (address) => {
+	console.log(apiURL + `balance/${address}`);
+    return await axios.get(apiURL + `balance/${address}`)
+    .catch(function (error) {
+      if (error.response) {
+        console.log(error.response);
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+      console.log(error.config);
+    }).then((res)=>{return res.data});
+}
+
+
+
+const parseBalance = (list, assetId) => {
+	console.log(2,list);
+    if (list.length === 0) {return 0}
+    else {
+        for (let el of list) {
+            if (el.assethash.slice(0,5) == assetId) {return el.amount;}
+        }
+    }
+    return 0;
+};
+
 const Content = () => {
 	const [open, setOpen] = React.useState(false);
+	const [neo, setNeo] = useState(0);
+	const [gas, setGas] = useState(0);
+
+	const getData = async () => {
+		const result = await getAddBalance(userAdd);
+		console.log(1, result);
+		const curGas = parseBalance(result,"0xd2a");
+		const curNeo = parseBalance(result,"0xef4");
+		console.log(curGas);
+		console.log(curNeo);
+		setGas(curGas);
+		setNeo(curNeo);
+	}
+	
+	useEffect(() => {
+		
+	}, []);
+
+
 	const handleOpen = () => {
 		setOpen(true);
 	};
@@ -31,6 +81,7 @@ const Content = () => {
 	const [userAdd, setUserAdd] = useState();
 	chrome.storage.local.get("address", (res) => {
 		setUserAdd(res.address);
+		getData(res.address);
 		console.log(userAdd);
   });
 
@@ -66,7 +117,8 @@ const Content = () => {
 					<Avatar><PaidRoundedIcon/></Avatar>
 					<Stack spacing={1} direction="row" justifyContent="center" alignItems="center">
 						<Typography variant="h6">Token Balance</Typography>
-						<Typography>NEO</Typography>
+						<Typography>{`NEO : ${neo}`}</Typography>
+						<Typography>{`Gas : ${gas}`}</Typography>
 					</Stack>
 					<Stack spacing={2} direction="column" justifyContent="center" alignItems="center">
 						<Button fullWidth size="small" variant="contained" component={Link} to="/transfer">
