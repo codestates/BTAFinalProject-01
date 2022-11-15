@@ -18,9 +18,9 @@ const CreateMultiSig = () => {
 		});
 	}
 	const [num, setNum] = useState(2);
-	const [multiSig, setMultiSig] = useState("");
 	const [webHook, setWebHook] = useState("");
-
+	const [multiSig, setMultiSig] = useState("");
+	
 	console.log(11,pubkeyList);
 
 	useEffect(() => {getData()}, [multiSig]);
@@ -67,7 +67,7 @@ const CreateMultiSig = () => {
 			<Box sx={{ flexGrow: 1, pt: 2}}>
 				{pubkeyList.map((item, i) => (
 					<div key={i}>
-						<label style={{ marginTop: "20px" }}>{`User ${i + 1}`}</label>
+						<label>{`User ${i + 1}`}</label>
 						<div style={{ marginBottom: "20px" }}>
 							<Typography variant="subtitle2">PubKey</Typography>
 							<TextField
