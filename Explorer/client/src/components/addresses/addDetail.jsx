@@ -40,6 +40,7 @@ function AddInfo() {
         };
 
         const result = await addAPI.getAddBalance(address);
+        console.log("yes",result);
         obj.gas = handleAdd.parseBalance(result,"0xd2a");
         obj.neo = handleAdd.parseBalance(result,"0xef4");
         obj.lastupdatedblock = handleAdd.getLastBlock(result);

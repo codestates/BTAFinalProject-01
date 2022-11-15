@@ -14,6 +14,7 @@ function BlockInfo() {
     const getBlock = async () => {
         const res = await blockAPI.getBlockInfo(blockNum);
         setB_info(res);
+        console.log(res);
         setTx(res.tx);
     };
 
@@ -69,7 +70,7 @@ function BlockInfo() {
         </Row>
         <h2>Transactions</h2>
         <Row gutter={16}>
-            <Card title="Invocation Script" bordered={false}>
+            <Card title="Transaction ID list" bordered={false}>
                 {tx.length > 0 ?  
                     tx.map((el) => { 
                         let txid = el.hash.slice(2,);
